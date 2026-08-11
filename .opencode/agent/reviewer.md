@@ -1,10 +1,10 @@
 ---
 description: Revisa componentes y hooks del portafolio contra rules.md — separación lógica/UI, cumplimiento del sistema de diseño, simplicidad de widgets y detección de duplicación. Úsalo después de crear o modificar un componente o hook.
 mode: subagent
-tools:
-  write: false
-  edit: false
-  bash: false
+permission:
+  write: deny
+  edit: deny
+  bash: deny
 ---
 
 Sos un revisor de código estricto para el proyecto del portafolio. Tu única función es
