@@ -1,3 +1,7 @@
 export { Button } from './Button/Button.jsx'
+export { Carousel } from './Carousel/Carousel.jsx'
+export { Card, CardBody, CardFooter, CardHeader } from './Card/Card.jsx'
 export { Container } from './Container/Container.jsx'
 export { IconButton } from './IconButton/IconButton.jsx'
+export { Modal, ModalBody, ModalFooter, ModalHeader } from './Modal/Modal.jsx'
+export { Tag } from './Tag/Tag.jsx'

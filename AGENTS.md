@@ -34,21 +34,22 @@ Leé siempre, en este orden, antes de tocar cualquier archivo:
 - **Navbar hide-on-scroll:** toda la lógica en `shared/hook/` — `useHideOnScroll` (scroll, threshold 200) y `useNavbarVisibility` (composición: oculto al bajar si no está en hover ni el menú abierto; `reveal`/`unreveal` para hover). El componente solo presenta: `-translate-y-full` + `duration-300 motion-reduce:transition-none`, franja trigger `h-4` en el borde superior cuando está oculto.
 - **Hero home:** fuera el badge `Available for new projects` y las stats (years/projects/teams). En su lugar hay un strip chico con el título `Technologies I work with` y un array local `TECH_ICONS` (placeholder con iconos de `lucide-react`) en la misma fila — pendiente mover ese array a `shared/data/` cuando se definan las tecnologías reales.
 - **About me:** eliminada la sección `Areas of expertise` (y su `Tag`/`SKILLS_BIO` locales). El widget queda con foto + bio.
+- **Primitivas `Card`, `Tag`, `Carousel` + `ProjectCard`:** `Card` en `shared/ui` (compound `CardHeader`/`CardBody`/`CardFooter`, body obligatorio, `px-5`/`py-5` en las tres secciones) con variantes `raised`/`surface` según el root donde se apoya — ver `design.md`. Solo el header se diferencia del body (banda un paso más clara + `border-b` de separación); body y footer comparten el color. `Tag` (badge de stack) como primitiva en `shared/ui`. `Carousel` (énfasis rotativo) en `shared/ui` con lógica en `shared/hook/useCarousel.js` — ver `design.md`. `ProjectCard` en `widgets/Projects/ui/`: body con imagen cover placeholder (`https://picsum.photos/200/300`, full-bleed con márgenes negativos, `object-cover`, `aspect-video`, `loading="lazy"`) + footer con título, descripción, 3 tags hardcoded de maqueta (`TAGS_MOCK`, **no consume `project.stack`** — la data se conecta al final), Live demo (`flex-1`) + Repo, y ghost "Ver mas" con flecha trailing (lucide `ArrowRight`) que recibe `onVerMas` y abre el modal. La imagen cover es placeholder externo — reemplazar por screenshot real (WebP en `shared/assets/images/`) antes del deploy. El grid de Projects es flex-wrap con 3 cards por fila (`w-full sm:w-1/2 lg:w-1/3`) y filas incompletas alineadas al `start`. Las acciones de la card están en un bloque con `gap-3` (Live demo `flex-1`, Repo, y "Ver mas").
+- **Primitiva `Modal` + `ProjectModal`:** `Modal` en `shared/ui` (compound `ModalHeader`/`ModalBody`/`ModalFooter`, reutiliza `Card` `raised`), sizes `sm`/`md`/`lg`/`xl`, overlay `z-[60]`, cierre por Escape/overlay/X (ver `design.md`). Toda la lógica (foco, trap de Tab, scroll lock, restauración de foco) en `shared/hook/useModalBehavior.js`. `ProjectModal` en `widgets/Projects/ui/` (patrón ProjectCard: reúne modal + contenido, `size="lg"`): header = título, capturas (Carousel, 3 imágenes mock = la de la card), descripción, secciones `Frontend`/`Backend`/`Herramientas` (mock) y footer con botones full-width. `Projects.jsx` maneja `activeProject` (null = cerrado). Capturas/tecnologías de maqueta — la data se conecta al final. Contact/TechStack todavía usan sus cards inline; migran cuando se toquen esos widgets.
 
 **Pendiente (en orden sugerido):**
-1. Crear primitivas en `shared/ui` (`Button`, `Card`, `Badge`, `SectionLabel`) y reemplazar duplicados: focus ring (`focus:ring-accent` + `active:scale-[0.98]`) en links/botones, padding base `py-3 px-5`, unificar radio del CTA "Download CV" (`rounded` vs `rounded-xl`), ajustar jerarquía tipográfica al spec (h1 `text-4xl→5xl font-semibold`, h3 `text-lg font-medium`).
+1. Crear primitivas en `shared/ui` (`Badge`, `SectionLabel`) y reemplazar duplicados: focus ring (`focus:ring-accent` + `active:scale-[0.98]`) en links/botones, padding base `py-3 px-5`, unificar radio del CTA "Download CV" (`rounded` vs `rounded-xl`), ajustar jerarquía tipográfica al spec (h1 `text-4xl→5xl font-semibold`, h3 `text-lg font-medium`).
 2. Reemplazar SVGs inline por iconos de `lucide-react` y eliminar duplicación de iconos/`Tag`/`SectionLabel`.
 3. Extraer `features/contact-form` (hook `useContactForm` + validación) del estado inline actual de `Contact`.
 4. Revisar links placeholder (`href="#"` en projects/CV/LinkedIn/GitHub) y `mailto:` ficticio con datos reales antes del deploy.
 5. Widget `Navbar` a pulir.
 6. Widget `Hero`.
 7. Widget `About`.
-8. Widget `Projects` (extraer `ProjectCard`).
-9. Widget `TechStack`.
-10. Widget `Timeline`.
-11. Widget `Contact`.
-12. Widget `Footer`.
-13. SEO (meta tags, Open Graph) y checklist de accesibilidad/Lighthouse de `rules.md`.
+8. Widget `TechStack` (migrar sus cards a la primitiva `Card`).
+9. Widget `Timeline`.
+10. Widget `Contact` (migrar su card "Direct contact" a `Card variant="surface"`).
+11. Widget `Footer`.
+12. SEO (meta tags, Open Graph) y checklist de accesibilidad/Lighthouse de `rules.md`.
 
 No asumas que este orden es rígido — actualizalo si cambia la prioridad real de trabajo.
 
