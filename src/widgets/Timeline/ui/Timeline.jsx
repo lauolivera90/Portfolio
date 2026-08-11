@@ -11,28 +11,7 @@ export function Timeline() {
         </p>
         <h2 className="text-3xl font-bold text-text mb-16">{sections.timeline.title}</h2>
 
-        <div className="hidden md:block">
-          <div className="relative">
-            <div className="absolute top-5 left-0 right-0 h-px bg-text/10" />
-
-            <div className="grid grid-cols-5 gap-4">
-              {timeline.map((item, i) => (
-                <div key={i} className="relative flex flex-col items-center text-center">
-                  <div
-                    className={`w-3 h-3 rounded-full flex-shrink-0 z-10 mt-[14px] mb-4 ${
-                      i === timeline.length - 1 ? 'bg-primary ring-4 ring-primary/20' : 'bg-text/30'
-                    }`}
-                  />
-                  <p className="text-xs font-semibold text-accent mb-1">{item.month} {item.year}</p>
-                  <p className="text-sm font-medium text-text leading-snug mb-1">{item.label}</p>
-                  <p className="text-xs text-text/60 leading-snug">{item.note}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="md:hidden flex flex-col gap-0">
+        <div className="flex flex-col gap-0">
           {timeline.map((item, i) => (
             <div key={i} className="flex gap-5">
               <div className="flex flex-col items-center">

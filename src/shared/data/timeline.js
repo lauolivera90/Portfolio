@@ -1,7 +1,38 @@
 export const timeline = [
-  { month: 'May', year: '2016', label: 'B.Sc. Computer Science', note: 'Software Engineering major' },
-  { month: 'Dec', year: '2019', label: 'PostgreSQL Certification', note: 'EDB Certified Associate' },
-  { month: 'Mar', year: '2021', label: 'Meridian launched', note: '12k+ teams onboarded' },
-  { month: 'Jan', year: '2023', label: 'Cascade shipped', note: '40M+ events / day' },
-  { month: 'Aug', year: '2026', label: 'Today', note: 'Open to new projects' },
-]
+  {
+    month: 'Jul',
+    year: '2022',
+    label: 'Programming Technician',
+    note: 'Universidad Nacional de Hurlingham (UNAHUR)',
+  },
+  {
+    month: 'Nov',
+    year: '2024',
+    label: 'PostgreSQL Certification',
+    note: 'CDAC / CEIT — UNAHUR',
+  },
+  {
+    month: 'Jul',
+    year: '2025',
+    label: 'Antisocial Net',
+    note: 'First full-stack project',
+  },
+  {
+    month: 'Abr–Jul',
+    year: '2026',
+    label: 'Nexo',
+    note: 'Graduation project — team of 5',
+  },
+  {
+    month: 'Jul',
+    year: '2026',
+    label: 'Graduated + started B.Sc. in Computer Science',
+    note: 'Continuing studies at UNAHUR',
+  },
+  {
+    month: 'Aug',
+    year: '2026',
+    label: 'Uloom',
+    note: 'Solo project, in development — today',
+  },
+];

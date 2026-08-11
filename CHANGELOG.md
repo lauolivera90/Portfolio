@@ -4,6 +4,31 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: botones sociales del footer ghost + fix color de iconos fallback
+
+### Changed
+- `Footer`: los botones de social (LinkedIn, Email, GitHub) pasan de `variant="secondary"` a `variant="ghost"`.
+
+### Fixed
+- Iconos de techs sin marca en Simple Icons (Nodemailer→`Mail`, OpenCode→`Bot`, y el resto de fallbacks lucide) se veían invisibles en las cards: se les pasaba `color="default"`, que en lucide genera `stroke="default"` (inválido) → sin trazo. Nuevo helper `iconColor(Icon)` en `shared/lib` (exportado por barrel) que devuelve `currentColor` para iconos lucide (`displayName` definido) y `default` para Simple Icons (color de marca). Aplicado en `TechStack` y `Hero`.
+
+## 2026-08-11 — Sesión: timeline horizontal scrolleable + iconos fallback Nodemailer/OpenCode
+
+### Changed
+- `Timeline`: pasa a **vertical en todos los tamaños** (una sola línea con puntos conectados, como estaba en mobile). Se elimina el layout horizontal del desktop — con varios hitos ya no se rompe ni necesita scroll.
+- `shared/data/techStack.js`: `Nodemailer` → lucide `Mail` (Backend) y `OpenCode` → lucide `Bot` (Tools) como fallback genérico (no existen en Simple Icons), ambos `onHero: false`.
+
+## 2026-08-11 — Sesión: scroll del Modal solo en el body
+
+### Changed
+- `Modal`: el scroll ya no es del modal completo. Card interno pasa a `flex flex-col` con tope `max-h-[90vh]`; `ModalHeader` y `ModalFooter` quedan fijos (`flex-shrink-0`) y **solo `ModalBody` scrollea** (`flex-1 overflow-y-auto min-h-0`). Con contenido alto, X y botones siempre visibles.
+
+## 2026-08-11 — Sesión: cards de proyectos (tags 2/2/1, espacio, links en pestaña nueva)
+
+### Changed
+- `ProjectCard`: los tags del subject pasan a **2 de frontend + 1 de backend + 1 de database** (sin tools), en ese orden. El bloque `tags + acciones` se ancla al fondo (`mt-auto`) → el espacio libre de la card queda **entre la descripción y el subject**, no entre tags y botones.
+- "Live demo" y "Repo" (card y modal) abren en **pestaña nueva**: `target="_blank" rel="noopener noreferrer"`.
+
 ## 2026-08-11 — Sesión: cards de proyectos con alto uniforme (descripción ajustable)
 
 ### Added

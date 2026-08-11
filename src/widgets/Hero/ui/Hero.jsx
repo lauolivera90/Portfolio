@@ -1,5 +1,6 @@
 import { Download } from 'lucide-react'
 import { profile, cv, sections, techStack } from '../../../shared/data/index.js'
+import { iconColor } from '../../../shared/lib/index.js'
 import { Button, Container } from '../../../shared/ui/index.js'
 
 const heroIcons = Object.values(techStack).flat().filter((t) => t.onHero)
@@ -32,7 +33,7 @@ export function Hero() {
             <span className="text-sm font-medium text-text/80">{sections.hero.techLabel}</span>
             <div className="flex items-center gap-5 text-text/50">
               {heroIcons.map(({ name, icon: Icon }) => (
-                <Icon key={name} size={28} color="default" aria-hidden="true" className="hover:text-text transition-colors" />
+                <Icon key={name} size={28} color={iconColor(Icon)} aria-hidden="true" className="hover:text-text transition-colors" />
               ))}
             </div>
           </div>

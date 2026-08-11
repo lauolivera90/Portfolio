@@ -31,9 +31,9 @@ export function Modal({ open, onClose, size = 'md', ariaLabel = 'Modal', classNa
         aria-modal="true"
         aria-label={ariaLabel}
         tabIndex={-1}
-        className={`w-full max-h-[90vh] overflow-y-auto ${sizes[size]} ${className}`}
+        className={`flex w-full max-h-[90vh] ${sizes[size]} ${className}`}
       >
-        <Card variant="raised" className="w-full">
+        <Card variant="raised" className="w-full flex flex-col min-h-0">
           {children}
         </Card>
       </div>
@@ -44,7 +44,7 @@ export function Modal({ open, onClose, size = 'md', ariaLabel = 'Modal', classNa
 
 export function ModalHeader({ onClose, className = '', children }) {
   return (
-    <CardHeader className={className}>
+    <CardHeader className={`flex-shrink-0 ${className}`}>
       <div className="flex items-start justify-between gap-3">
         <div>{children}</div>
         {onClose && (
@@ -58,12 +58,12 @@ export function ModalHeader({ onClose, className = '', children }) {
 }
 
 export function ModalBody({ className = '', children }) {
-  return <CardBody className={`flex flex-col gap-5 ${className}`}>{children}</CardBody>
+  return <CardBody className={`flex flex-col gap-5 flex-1 overflow-y-auto min-h-0 ${className}`}>{children}</CardBody>
 }
 
 export function ModalFooter({ className = '', children }) {
   return (
-    <CardFooter className={className}>
+    <CardFooter className={`flex-shrink-0 ${className}`}>
       <div className="flex flex-col gap-3">{children}</div>
     </CardFooter>
   )

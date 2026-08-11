@@ -6,7 +6,11 @@ import { Button, Card, CardBody, CardFooter, Tag } from '../../../shared/ui/inde
 
 export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
   const [descRef, lines] = useLines()
-  const tags = Object.values(project.stack).flat().slice(0, 4)
+  const tags = [
+    ...project.stack.frontend.slice(0, 2),
+    ...project.stack.backend.slice(0, 1),
+    ...project.stack.database.slice(0, 1),
+  ]
   const cover = project.images[0] ?? 'https://picsum.photos/200/300'
 
   useEffect(() => {
@@ -46,20 +50,33 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
             {project.shortDescription}
           </p>
 
-          {tags.length > 0 && (
-            <div className="flex flex-wrap gap-1.5">
-              {tags.map((t) => (
-                <Tag key={t}>{t}</Tag>
-              ))}
-            </div>
-          )}
+          <div className="mt-auto flex flex-col gap-3">
+            {tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5">
+                {tags.map((t) => (
+                  <Tag key={t}>{t}</Tag>
+                ))}
+              </div>
+            )}
 
-          <div className="flex flex-col gap-3 mt-auto">
             <div className="flex gap-3">
-              <Button variant="primary" className="flex-1" href={project.demoUrl} icon={<ExternalLink />}>
+              <Button
+                variant="primary"
+                className="flex-1"
+                href={project.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                icon={<ExternalLink />}
+              >
                 Live demo
               </Button>
-              <Button variant="secondary" href={project.repoUrl} icon={<SiGithub color="currentColor" />}>
+              <Button
+                variant="secondary"
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                icon={<SiGithub color="currentColor" />}
+              >
                 Repo
               </Button>
             </div>

@@ -50,10 +50,23 @@ export function ProjectModal({ project, onClose }) {
 
       <ModalFooter>
         <div className="flex gap-3">
-          <Button variant="primary" className="flex-1" href={project.demoUrl} icon={<ExternalLink />}>
+          <Button
+            variant="primary"
+            className="flex-1"
+            href={project.demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            icon={<ExternalLink />}
+          >
             Live demo
           </Button>
-          <Button variant="secondary" href={project.repoUrl} icon={<SiGithub color="currentColor" />}>
+          <Button
+            variant="secondary"
+            href={project.repoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            icon={<SiGithub color="currentColor" />}
+          >
             Repo
           </Button>
         </div>

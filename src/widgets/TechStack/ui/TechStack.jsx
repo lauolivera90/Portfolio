@@ -1,4 +1,5 @@
 import { sections, techStack } from '../../../shared/data/index.js'
+import { iconColor } from '../../../shared/lib/index.js'
 import { Card, CardBody, Container } from '../../../shared/ui/index.js'
 
 export function TechStack() {
@@ -22,7 +23,7 @@ export function TechStack() {
                   {items.map(({ name, icon: Icon }) => (
                     <li key={name} className="flex items-center gap-3">
                       <span className="text-text/60" aria-hidden="true">
-                        <Icon size={20} color="default" />
+                        <Icon size={20} color={iconColor(Icon)} />
                       </span>
                       <span className="text-sm text-text/60">{name}</span>
                     </li>
