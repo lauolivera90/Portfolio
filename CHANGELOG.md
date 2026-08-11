@@ -4,6 +4,45 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: autoplay del carousel + zoom de capturas (Lightbox)
+
+### Added
+- `shared/hook/useCarouselPause.js`: pausa del autoplay por hover, focus dentro, `prefers-reduced-motion` y fuera de vista (`IntersectionObserver`).
+- `shared/ui/Lightbox/Lightbox.jsx` (barrel): zoom de imagen en capa `z-[70]` por encima del modal (`z-[60]`). Imagen `max-h-[85vh] max-w-[85vw] object-contain`; cierre por X, click en el fondo o Escape; **prev/next** (IconButton ghost con `ChevronLeft`/`ChevronRight` + teclas `ArrowLeft`/`ArrowRight`, wrap-around resuelto por el consumidor). Reutiliza `useModalBehavior` (foco, trap de Tab, restore de foco al trigger).
+
+### Changed
+- `useCarousel`: firma `useCarousel(total, { interval = 0, paused = false })` — autoplay con `setInterval` (en `Carousel` default `interval = 5000`); `index` en deps → la navegación manual reinicia la cuenta. `next`/`prev`/`goTo` con `useCallback`.
+- `Carousel`: nuevas props `interval`, `paused` (externa, para pausar con el zoom abierto) y `onImageClick(index)`. Las slides pasan de `<img>` directo a **`<button>`** con el `<img>` adentro (accesible con teclado, click → zoom); selectores de slot `[&>button]:` + `[&_img]:`.
+- `useModalBehavior`/`Modal`: nueva prop `suspended` — mientras está suspendido, el listener del modal ignora Escape y el trap de Tab (vía `suspendedRef`, sin teardown del efecto → scroll lock y foco del diálogo se mantienen).
+- `ProjectModal`: estado `zoomIndex` (click en captura → `Lightbox` con prev/next circular `(i ± 1 + total) % total`); `<Modal suspended>` y `<Carousel paused>` mientras el zoom está abierto.
+
+## 2026-08-11 — Sesión: fix posicionamiento del dropdown (coords fijos)
+
+### Fixed
+- El menú del `Dropdown` en las cards de Proyectos se posicionaba con clases CSS (`mt-2`/`bottom-full` + `left-0`) y quedaba encimado al botón ("en el medio del botón") por la *static position* dentro de la fila flex. Ahora el menú es **`position: fixed` con coordenadas explícitas** calculadas en `shared/hook/useDropdownPlacement.js` (`getBoundingClientRect` del trigger + `offsetWidth/offsetHeight` del menú): `top`/`bottom` y `left`/`right` según el espacio disponible, con guard de encaje (solo elige arriba si entra) y `ResizeObserver` + `resize` para remedir.
+- El menú pasa a estar **siempre montado** (se mide oculto antes del paint y se muestra solo cuando `open && coords`) → el ref nunca falta, se elimina el frame previo con la posición obsoleta y el `fixed` escapa al `overflow-hidden` de las cards.
+
+## 2026-08-11 — Sesión: dropdown con posicionamiento automático (autoflip vertical + borde derecho)
+
+### Added
+- `shared/hook/useDropdownPlacement.js`: mide trigger y menú al abrir (`useLayoutEffect`, antes del paint) y decide `placement` (`top`/`bottom`) y `align` (`start`/`end`). Abre abajo si hay espacio; si no, arriba (el que tenga más). Si el menú saldría por el borde derecho de la pantalla, se alinea con `right-0`. Remide en `resize`.
+
+### Changed
+- `Dropdown` (`shared/ui`): se eliminan las props `up` y `align` — la posición ahora es automática (el caso del modal se resuelve solo: el menú del footer autoflipea hacia arriba).
+- `useDropdown`: agrega `menuRef` al return y **cierra el menú ante cualquier scroll** (listener `scroll` con capture en `document`), además de click fuera y Escape.
+- `ProjectActions`/`ProjectModal`: se quita el parámetro `up`.
+
+## 2026-08-11 — Sesión: botones de proyectos unificados (status/demoType/repoUrl) + Dropdown
+
+### Added
+- Primitiva `Dropdown` en `shared/ui` (compound `Dropdown`/`DropdownTrigger`/`DropdownMenu`/`DropdownItem`) con lógica en `shared/hook/useDropdown.js` (cierra con click fuera y Escape, devuelve foco al trigger). Props `align` y `up` (abre hacia arriba — requerido dentro del `Modal`, cuyo Card tiene `overflow-hidden`).
+- `widgets/Projects/ui/ProjectActions.jsx`: botones demo/repo compartidos entre card y modal (elimina la duplicación de `ProjectCard`/`ProjectModal`).
+
+### Changed
+- `shared/data/projects.js`: shape normalizado. `status` (`'finished'` | `'in-development'`) y `demoType` (`'deployment'` | `'video'`) explícitos en los 3 proyectos. `repoUrl` pasa a **array `[{type, url}]`** (se elimina el campo suelto `backendRepoUrl` de Antisocial Net; Nexo queda `[]` hasta que el repo esté público).
+- Reglas de botones: `in-development` → botón secundario `disabled` "In development" (Clock). `demoType: video` → "Watch" (Play). Default → "Live demo" (ExternalLink). Repo: vacío → nada; 1 item → botón "Repo"; 2+ → dropdown con "Backend"/"Frontend".
+- `ProjectModal`: el `Carousel` se oculta cuando `project.images` está vacío (solo screenshots reales); la card conserva el fallback picsum.
+
 ## 2026-08-11 — Sesión: botones sociales del footer ghost + fix color de iconos fallback
 
 ### Changed

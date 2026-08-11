@@ -1,5 +1,8 @@
 export { useActiveSection } from './useActiveSection.js'
 export { useCarousel } from './useCarousel.js'
+export { useCarouselPause } from './useCarouselPause.js'
+export { useDropdown } from './useDropdown.js'
+export { useDropdownPlacement } from './useDropdownPlacement.js'
 export { useHideOnScroll } from './useHideOnScroll.js'
 export { useLines } from './useLines.js'
 export { useModalBehavior } from './useModalBehavior.js'

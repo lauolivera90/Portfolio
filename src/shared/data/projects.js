@@ -12,12 +12,11 @@ export const projects = [
       database: ["PostgreSQL"],
       tools: ["Docker", "OpenCode"],
     },
+    status: "finished",
+    demoType: "deployment",
     demoUrl: "https://desapp-frontend.onrender.com",
-    // TODO: agregar cuando esté público
-    repoUrl: null,
-    images: [
-      // TODO: agregar capturas reales (no repetir la misma imagen en distintos slots)
-    ],
+    repoUrl: [], // TODO: agregar cuando esté público
+    images: [],
   },
   {
     id: "antisocial-net",
@@ -32,13 +31,14 @@ export const projects = [
       database: ["MongoDB"],
       tools: ["Docker"],
     },
+    status: "finished",
+    demoType: "deployment",
     demoUrl: "https://anti-social-net.vercel.app/",
-    repoUrl: "https://github.com/lauolivera90/anti-social-net",
-    // Nota: hay un segundo repo de backend separado — ver decisión pendiente abajo
-    backendRepoUrl: "https://github.com/lauolivera90/backend-antisocialnet",
-    images: [
-      // TODO: agregar capturas reales (no repetir la misma imagen en distintos slots)
+    repoUrl: [
+      { type: "frontend", url: "https://github.com/lauolivera90/anti-social-net" },
+      { type: "backend", url: "https://github.com/lauolivera90/backend-antisocialnet" },
     ],
+    images: [],
   },
   {
     id: "uloom",
@@ -53,12 +53,10 @@ export const projects = [
       database: [], // persistencia en archivos JSON locales, no hay DB
       tools: ["Electron Forge", "ESLint", "OpenCode", "Figma", "Stitch"],
     },
-    status: "in-development", // muestra badge "In development — v0.4.3" en vez de botón demo
-    demoType: null, // "video" cuando exista una grabación; "download" cuando haya release
+    status: "in-development",
+    demoType: "deployment", // "video" cuando exista una grabación; "download" cuando haya release
     demoUrl: null,
-    repoUrl: "https://github.com/lauolivera90/uloom", // TODO: confirmar URL exacta del repo
-    images: [
-      // TODO: agregar capturas reales (no repetir la misma imagen en distintos slots)
-    ],
+    repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/uloom" }], // TODO: confirmar URL exacta del repo
+    images: [],
   }
 ]

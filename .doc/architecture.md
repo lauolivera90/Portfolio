@@ -50,6 +50,8 @@ src/
       ui/
         Projects.jsx
         ProjectCard.jsx
+        ProjectActions.jsx    (botones demo/repo compartidos card+modal)
+        ProjectModal.jsx
       index.js
     TechStack/
       ui/
@@ -94,9 +96,14 @@ src/
       Badge/
       Container/          (gutter horizontal único: `max-w-6xl mx-auto px-6`, acepta className)
       IconButton/
+      Dropdown/           (menú desplegable compound — ver design.md)
+      Lightbox/           (zoom de imagen por encima del modal — ver design.md)
       index.js
     hook/                 (useScrollReveal, useMediaQuery, etc.)
       useActiveSection.js   (sección visible con IntersectionObserver, banda central)
+      useCarouselPause.js   (pausa del autoplay del Carousel: hover, focus, reduced-motion, fuera de vista)
+      useDropdown.js        (estado y cierre del Dropdown: click fuera + Escape + scroll)
+      useDropdownPlacement.js (posición automática del menú: coords fijos por getBoundingClientRect, autoflip vertical + alineación al borde)
       useHideOnScroll.js    (ocultar al bajar con threshold, mostrar al subir)
       useNavbarVisibility.js (composición: scroll hide + hover reveal + menú abierto)
       useScrollReveal.js

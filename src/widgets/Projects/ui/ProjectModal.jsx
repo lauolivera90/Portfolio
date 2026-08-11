@@ -1,6 +1,6 @@
-import { ExternalLink } from 'lucide-react'
-import { SiGithub } from '@icons-pack/react-simple-icons'
-import { Button, Carousel, Modal, ModalBody, ModalFooter, ModalHeader, Tag } from '../../../shared/ui/index.js'
+import { useState } from 'react'
+import { Carousel, Lightbox, Modal, ModalBody, ModalFooter, ModalHeader, Tag } from '../../../shared/ui/index.js'
+import { ProjectActions } from './ProjectActions.jsx'
 
 const STACK_SECTIONS = [
   { key: 'frontend', label: 'Frontend' },
@@ -23,54 +23,63 @@ function TechSection({ label, items }) {
 }
 
 export function ProjectModal({ project, onClose }) {
+  const [zoomIndex, setZoomIndex] = useState(null)
+
   if (!project) return null
 
-  const images = project.images.length > 0 ? project.images : ['https://picsum.photos/200/300']
+  const hasImages = project.images.length > 0
   const sections = STACK_SECTIONS.filter((s) => (project.stack[s.key]?.length ?? 0) > 0)
+  const total = project.images.length
 
   return (
-    <Modal open onClose={onClose} size="xl" ariaLabel={project.title}>
-      <ModalHeader onClose={onClose}>
-        <h3 className="text-base font-semibold text-text leading-snug">{project.title}</h3>
-      </ModalHeader>
+    <>
+      <Modal open onClose={onClose} size="xl" ariaLabel={project.title} suspended={zoomIndex !== null}>
+        <ModalHeader onClose={onClose}>
+          <h3 className="text-base font-semibold text-text leading-snug">{project.title}</h3>
+        </ModalHeader>
 
-      <ModalBody>
-        <Carousel ariaLabel="Project screenshots">
-          {images.map((src, i) => (
-            <img key={i} src={src} alt={`${project.title} screenshot ${i + 1}`} width="200" height="300" loading="lazy" />
+        <ModalBody>
+          {hasImages && (
+            <Carousel
+              ariaLabel="Project screenshots"
+              paused={zoomIndex !== null}
+              onImageClick={setZoomIndex}
+            >
+              {project.images.map((src, i) => (
+                <img
+                  key={src}
+                  src={src}
+                  alt={`${project.title} screenshot ${i + 1}`}
+                  width="200"
+                  height="300"
+                  loading="lazy"
+                />
+              ))}
+            </Carousel>
+          )}
+
+          <p className="text-sm text-text/60 leading-relaxed">{project.fullDescription}</p>
+
+          {sections.map((s) => (
+            <TechSection key={s.key} label={s.label} items={project.stack[s.key]} />
           ))}
-        </Carousel>
+        </ModalBody>
 
-        <p className="text-sm text-text/60 leading-relaxed">{project.fullDescription}</p>
+        <ModalFooter>
+          <ProjectActions project={project} />
+        </ModalFooter>
+      </Modal>
 
-        {sections.map((s) => (
-          <TechSection key={s.key} label={s.label} items={project.stack[s.key]} />
-        ))}
-      </ModalBody>
-
-      <ModalFooter>
-        <div className="flex gap-3">
-          <Button
-            variant="primary"
-            className="flex-1"
-            href={project.demoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            icon={<ExternalLink />}
-          >
-            Live demo
-          </Button>
-          <Button
-            variant="secondary"
-            href={project.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            icon={<SiGithub color="currentColor" />}
-          >
-            Repo
-          </Button>
-        </div>
-      </ModalFooter>
-    </Modal>
+      {zoomIndex !== null && (
+        <Lightbox
+          open
+          src={project.images[zoomIndex]}
+          alt={`${project.title} screenshot ${zoomIndex + 1}`}
+          onPrev={() => setZoomIndex((i) => (i - 1 + total) % total)}
+          onNext={() => setZoomIndex((i) => (i + 1) % total)}
+          onClose={() => setZoomIndex(null)}
+        />
+      )}
+    </>
   )
 }

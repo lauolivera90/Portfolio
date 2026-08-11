@@ -12,9 +12,9 @@ const sizes = {
   xl: 'max-w-xl',
 }
 
-export function Modal({ open, onClose, size = 'md', ariaLabel = 'Modal', className = '', children }) {
+export function Modal({ open, onClose, size = 'md', ariaLabel = 'Modal', suspended = false, className = '', children }) {
   const dialogRef = useRef(null)
-  useModalBehavior({ open, onClose, dialogRef })
+  useModalBehavior({ open, onClose, dialogRef, suspended })
 
   if (!open) return null
 

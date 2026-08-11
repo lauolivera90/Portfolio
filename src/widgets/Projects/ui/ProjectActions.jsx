@@ -1,0 +1,90 @@
+import { ChevronDown, Clock, ExternalLink, Play } from 'lucide-react'
+import { SiGithub } from '@icons-pack/react-simple-icons'
+import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '../../../shared/ui/index.js'
+
+const REPO_LABELS = { frontend: 'Frontend', backend: 'Backend' }
+
+function DemoButton({ status, demoType, demoUrl }) {
+  if (status === 'in-development') {
+    return (
+      <Button variant="secondary" className="flex-1" disabled icon={<Clock />}>
+        In development
+      </Button>
+    )
+  }
+
+  if (demoType === 'video') {
+    return (
+      <Button
+        variant="primary"
+        className="flex-1"
+        href={demoUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        icon={<Play />}
+      >
+        Watch
+      </Button>
+    )
+  }
+
+  return (
+    <Button
+      variant="primary"
+      className="flex-1"
+      href={demoUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      icon={<ExternalLink />}
+    >
+      Live demo
+    </Button>
+  )
+}
+
+function RepoButton({ repoUrl }) {
+  if (!repoUrl?.length) return null
+
+  if (repoUrl.length === 1) {
+    return (
+      <Button
+        variant="secondary"
+        href={repoUrl[0].url}
+        target="_blank"
+        rel="noopener noreferrer"
+        icon={<SiGithub color="currentColor" />}
+      >
+        Repo
+      </Button>
+    )
+  }
+
+  return (
+    <Dropdown>
+      <DropdownTrigger>
+        <Button variant="secondary" icon={<SiGithub color="currentColor" />}>
+          <span className="inline-flex items-center gap-1">
+            Repo
+            <ChevronDown aria-hidden="true" size={16} />
+          </span>
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu>
+        {repoUrl.map(({ type, url }) => (
+          <DropdownItem key={url} href={url} icon={<SiGithub color="currentColor" />}>
+            {REPO_LABELS[type] ?? type}
+          </DropdownItem>
+        ))}
+      </DropdownMenu>
+    </Dropdown>
+  )
+}
+
+export function ProjectActions({ project }) {
+  return (
+    <div className="flex gap-3">
+      <DemoButton status={project.status} demoType={project.demoType} demoUrl={project.demoUrl} />
+      <RepoButton repoUrl={project.repoUrl} />
+    </div>
+  )
+}

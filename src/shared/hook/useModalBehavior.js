@@ -3,11 +3,16 @@ import { useEffect, useRef } from 'react'
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
 
-export function useModalBehavior({ open, onClose, dialogRef }) {
+export function useModalBehavior({ open, onClose, dialogRef, suspended = false }) {
   const onCloseRef = useRef(onClose)
   useEffect(() => {
     onCloseRef.current = onClose
   }, [onClose])
+
+  const suspendedRef = useRef(suspended)
+  useEffect(() => {
+    suspendedRef.current = suspended
+  }, [suspended])
 
   useEffect(() => {
     if (!open) return undefined
@@ -21,6 +26,7 @@ export function useModalBehavior({ open, onClose, dialogRef }) {
     dialog.focus()
 
     const onKeyDown = (event) => {
+      if (suspendedRef.current) return
       if (event.key === 'Escape') {
         onCloseRef.current()
         return

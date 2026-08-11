@@ -7,7 +7,7 @@ export const sections = {
   projects: {
     eyebrow: 'Projects',
     title: "What I've built",
-    subtitle: 'Two full-stack projects, from database design to deployment.',
+    subtitle: 'Three full-stack projects, from database design to deployment.',
   },
   techStack: { eyebrow: 'Tech stack', title: 'Tools I work with' },
   timeline: { eyebrow: 'Timeline', title: 'My journey' },

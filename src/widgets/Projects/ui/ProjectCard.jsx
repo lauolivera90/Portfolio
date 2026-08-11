@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
-import { ArrowRight, ExternalLink } from 'lucide-react'
-import { SiGithub } from '@icons-pack/react-simple-icons'
+import { ArrowRight } from 'lucide-react'
 import { useLines } from '../../../shared/hook/index.js'
 import { Button, Card, CardBody, CardFooter, Tag } from '../../../shared/ui/index.js'
+import { ProjectActions } from './ProjectActions.jsx'
 
 export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
   const [descRef, lines] = useLines()
@@ -59,27 +59,7 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
               </div>
             )}
 
-            <div className="flex gap-3">
-              <Button
-                variant="primary"
-                className="flex-1"
-                href={project.demoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                icon={<ExternalLink />}
-              >
-                Live demo
-              </Button>
-              <Button
-                variant="secondary"
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                icon={<SiGithub color="currentColor" />}
-              >
-                Repo
-              </Button>
-            </div>
+            <ProjectActions project={project} />
 
             <Button variant="ghost" onClick={onVerMas}>
               <span className="inline-flex items-center gap-2">
