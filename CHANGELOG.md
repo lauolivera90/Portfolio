@@ -4,6 +4,21 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: Hero home
+
+### Added
+- Strip de tecnologías en el home (donde estaban las stats): título `Technologies I work with` + iconos placeholder de `lucide-react` (`Code2`, `Database`, `Server`, `Globe`, `Braces`) desde un array local `TECH_ICONS` listo para migrar a `shared/data/`.
+- Tip reutilizable en `.doc/rules.md`: heroes full-height con unidades `svh` (`min-h-svh`), con nota de `dvh` y espaciado compacto.
+
+### Changed
+- Strip de tecnologías: iconos en una segunda línea debajo del título, `size 28`, gaps `gap-5`.
+- Hero full-height consistente en todos los tamaños de pantalla: `min-h-screen` → `min-h-svh`, y reducción del whitespace vertical fijo (`py-24`→`py-16`, `mb-10`→`mb-8`, `mt-16 pt-8`→`mt-10 pt-6`, subtítulo `mb-6`→`mb-5`) para que el strip entre siempre en viewports de 667px+.
+- `h1` escalable: `text-5xl md:text-6xl` → `text-[clamp(2.5rem,7vw,3.75rem)]`.
+
+### Removed
+- Badge `Available for new projects`.
+- Stats del hero (`Years of experience`, `Projects shipped`, `Teams served`).
+
 ## 2026-08-11 — Sesión: Navbar target móvil
 
 ### Changed

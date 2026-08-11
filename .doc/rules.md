@@ -2,6 +2,8 @@
 
 Adaptado de las reglas de Uloom, filtrado para un proyecto de una sola página sin backend. El criterio acá no es pureza arquitectónica sino simplicidad + performance + accesibilidad, porque lo que se evalúa en un portafolio es la primera impresión y la calidad del código visible en el repo.
 
+> **Tip reutilizable — heroes full-height:** usá unidades `svh` (`min-h-svh`). `100vh` / `min-h-screen` miden el alto máximo del viewport, pero en móvil la barra del navegador ocupa parte y el contenido desborda o queda con scroll fantasma. `svh` usa el alto "pequeño" (estable): el hero SIEMPRE entra en el viewport real, consistente en todos los tamaños. `dvh` sigue el alto dinámico si querés que se expanda al ocultar la barra. Acompañar con espaciado vertical compacto (`py-16`, no `py-24`) para que el contenido no se corte en pantallas bajas.
+
 ## 1. Lógica en hooks, solo donde realmente aporta
 
 No todo pedazo de estado necesita su propio hook. Extraé a un hook cuando:
