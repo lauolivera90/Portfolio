@@ -1,4 +1,5 @@
 import { techStack } from '../../../shared/data/techStack.js'
+import { Container } from '../../../shared/ui/index.js'
 
 function Tag({ label }) {
   return (
@@ -11,7 +12,7 @@ function Tag({ label }) {
 export function TechStack() {
   return (
     <section className="py-24 border-t border-text/10">
-      <div className="max-w-6xl mx-auto px-6">
+      <Container>
         <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
           <span className="w-4 h-px bg-accent" />
           Tech stack
@@ -30,7 +31,7 @@ export function TechStack() {
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

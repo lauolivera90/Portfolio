@@ -25,6 +25,9 @@ Orden de import permitido: `app → pages → widgets → features → entities 
 src/
   app/
     App.jsx
+    layouts/
+      MainLayout.jsx     (shell global: Navbar + <main> + Footer, recibe children)
+      index.js
     providers/          (ThemeProvider si aplica, etc.)
     styles/
       globals.css        (tokens de design.md, reset, fuentes)
@@ -33,6 +36,7 @@ src/
     Navbar/
       ui/
         Navbar.jsx
+        NavbarItem.jsx   (item del nav: subrayado primary si activo, border-text/10 si no)
       index.js            (barrel)
     Hero/
       ui/
@@ -88,8 +92,13 @@ src/
       Button/
       Card/
       Badge/
+      Container/          (gutter horizontal único: `max-w-6xl mx-auto px-6`, acepta className)
+      IconButton/
       index.js
     hook/                 (useScrollReveal, useMediaQuery, etc.)
+      useActiveSection.js   (sección visible con IntersectionObserver, banda central)
+      useHideOnScroll.js    (ocultar al bajar con threshold, mostrar al subir)
+      useNavbarVisibility.js (composición: scroll hide + hover reveal + menú abierto)
       useScrollReveal.js
       index.js
     lib/                  (helpers puros sin JSX: formatDate, cn, etc.)
@@ -141,6 +150,7 @@ Hay dos ubicaciones válidas según el tipo de imagen — no es indistinto:
 
 ## 4. Capas que quedan vacías o simplificadas en este proyecto
 
+- **`app/layouts/`**: el shell que envuelve cada vista. `MainLayout` compone `Navbar` + `<main>` + `Footer` y recibe el contenido por `children`. Vive en `app/` (no en `widgets/`) porque importa el widget `Navbar` — dos widgets no se importan entre sí (sección 6), pero `app/` sí puede importar hacia abajo. Las pages (hoy un único `App.jsx`) no renderizan `Navbar`/`Footer` ni repiten el margin/padding del root: solo pasan sus secciones como `children`. Si mañana hay una segunda vista, se crea otra composición que envuelve su contenido con el mismo `MainLayout`.
 - **`pages/`**: si el portafolio es una sola vista, esta capa puede no existir — `App.jsx` compone los widgets directo en `app/`. Si en el futuro agregás una página de detalle por proyecto (`/proyectos/[slug]`), ahí sí se justifica crear `pages/ProjectDetail/`.
 - **`entities/`**: no hay entidades de negocio con lógica propia. Los datos de proyectos, stack y timeline son estáticos y viven en `shared/data/` como arrays/objetos planos, no como una "entidad" con hooks de fetching, mutaciones, etc. Si en algún momento el contenido pasa a venir de un backend/CMS, ahí se justifica crear `entities/project/` con su propio hook de fetch.
 - **`features/`**: en un portafolio típico, la única "feature" real es el formulario de contacto (si lo tenés) — es la única interacción con lógica propia (validación, estado de envío). Un toggle de tema también podría calificar. Todo lo demás (Hero, About, Projects, Timeline) es contenido presentacional → va en `widgets/`, no en `features/`.

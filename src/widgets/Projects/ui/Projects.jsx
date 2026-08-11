@@ -1,4 +1,5 @@
 import { projects } from '../../../shared/data/projects.js'
+import { Button, Container } from '../../../shared/ui/index.js'
 
 const IconExternalLink = () => (
   <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -25,7 +26,7 @@ function Tag({ label }) {
 export function Projects() {
   return (
     <section id="projects" className="py-24 border-t border-text/10 bg-text/5">
-      <div className="max-w-6xl mx-auto px-6">
+      <Container>
         <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
           <span className="w-4 h-px bg-accent" />
           Projects
@@ -55,25 +56,17 @@ export function Projects() {
               </div>
 
               <div className="flex gap-2 pt-1 border-t border-text/10">
-                <a
-                  href={p.demo}
-                  className="inline-flex items-center gap-1.5 bg-primary hover:brightness-110 text-text text-xs font-medium px-3 py-1.5 rounded transition-all"
-                >
-                  <IconExternalLink />
+                <Button variant="primary" href={p.demo} icon={<IconExternalLink />}>
                   Live demo
-                </a>
-                <a
-                  href={p.repo}
-                  className="inline-flex items-center gap-1.5 border border-text/10 hover:border-primary/50 text-text text-xs font-medium px-3 py-1.5 rounded transition-colors"
-                >
-                  <IconGithub />
+                </Button>
+                <Button variant="secondary" href={p.repo} icon={<IconGithub />}>
                   Repo
-                </a>
+                </Button>
               </div>
             </div>
           ))}
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

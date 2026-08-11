@@ -1,3 +1,5 @@
+import { Button, Container } from '../../../shared/ui/index.js'
+
 const IconDownload = () => (
   <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
@@ -8,8 +10,8 @@ const IconDownload = () => (
 
 export function Hero() {
   return (
-    <section id="home" className="min-h-screen flex items-center pt-16">
-      <div className="max-w-6xl mx-auto px-6 py-24 w-full">
+    <section id="home" className="min-h-screen flex items-center pt-20">
+      <Container className="py-24 w-full">
         <div className="max-w-2xl">
           <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 text-text/80 text-xs font-medium px-3 py-1.5 rounded mb-8">
             <span className="w-1.5 h-1.5 rounded-full bg-text/80 animate-pulse" />
@@ -28,19 +30,12 @@ export function Hero() {
           </p>
 
           <div className="flex flex-wrap gap-3">
-            <a
-              href="#projects"
-              className="inline-flex items-center gap-2 bg-primary hover:brightness-110 text-text text-sm font-medium px-5 py-2.5 rounded transition-all"
-            >
+            <Button variant="primary" href="#projects">
               View projects
-            </a>
-            <a
-              href="#"
-              className="inline-flex items-center gap-2 border border-text/10 hover:border-primary/50 text-text text-sm font-medium px-5 py-2.5 rounded transition-colors"
-            >
-              <IconDownload />
+            </Button>
+            <Button variant="secondary" href="#" icon={<IconDownload />}>
               Download CV
-            </a>
+            </Button>
           </div>
 
           <div className="mt-16 pt-8 border-t border-text/10 flex flex-wrap gap-10">
@@ -56,7 +51,7 @@ export function Hero() {
             ))}
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

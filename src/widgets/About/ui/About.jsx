@@ -1,3 +1,5 @@
+import { Container } from '../../../shared/ui/index.js'
+
 const SKILLS_BIO = [
   'Full Stack',
   'System Design',
@@ -18,7 +20,7 @@ function Tag({ label }) {
 export function About() {
   return (
     <section id="about" className="py-24 border-t border-text/10">
-      <div className="max-w-6xl mx-auto px-6">
+      <Container>
         <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
           <span className="w-4 h-px bg-accent" />
           About me
@@ -59,7 +61,7 @@ export function About() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

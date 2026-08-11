@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Button, Container } from '../../../shared/ui/index.js'
 
 const IconMail = () => (
   <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -39,7 +40,7 @@ export function Contact() {
 
   return (
     <section id="contact" className="py-24 border-t border-text/10">
-      <div className="max-w-6xl mx-auto px-6">
+      <Container>
         <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
           <span className="w-4 h-px bg-accent" />
           Contact
@@ -97,13 +98,9 @@ export function Contact() {
                 />
               </div>
               <div>
-                <button
-                  type="submit"
-                  disabled={status === 'sending'}
-                  className="inline-flex items-center gap-2 bg-primary hover:brightness-110 disabled:opacity-60 text-text text-sm font-medium px-5 py-2.5 rounded transition-all"
-                >
+                <Button variant="primary" type="submit" disabled={status === 'sending'}>
                   {status === 'sending' ? 'Sending…' : 'Send message'}
-                </button>
+                </Button>
               </div>
             </form>
           )}
@@ -144,16 +141,12 @@ export function Contact() {
               </div>
             </div>
 
-            <a
-              href="#"
-              className="flex items-center justify-center gap-2 border border-text/10 hover:border-primary/50 text-text text-sm font-medium px-4 py-2.5 rounded-xl transition-colors"
-            >
-              <IconDownload />
+            <Button variant="secondary" href="#" icon={<IconDownload />}>
               Download CV
-            </a>
+            </Button>
           </div>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

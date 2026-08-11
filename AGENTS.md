@@ -6,6 +6,7 @@ Sitio de una sola página (landing), React + Vite + Tailwind CSS. Portafolio per
 
 Leé siempre, en este orden, antes de tocar cualquier archivo:
 
+0. `CHANGELOG.md` — histórico por fecha/sesión: qué se construyó y cuándo. Leer primero para entrar en contexto.
 1. `architecture.md` — estructura de carpetas (FSD simplificado), dónde van las imágenes y assets.
 2. `rules.md` — reglas obligatorias: separación lógica/hooks, memory leaks, imágenes optimizadas, SEO, accesibilidad, mobile-first.
 3. `design.md` — sistema de diseño: tokens de color (`--text`, `--background`, `--primary`, `--secondary`, `--accent`), tipografía, breakpoints. Los componentes usan SOLO tokens (`bg-primary`, `text-text`, etc.), nunca hex hardcodeado.
@@ -24,6 +25,13 @@ Leé siempre, en este orden, antes de tocar cualquier archivo:
 - A11y aplicada en la migración: labels de Contact con `htmlFor`/`id`, `aria-hidden` en SVGs decorativos, `aria-expanded`/`aria-controls` en el menú móvil.
 - **Plantilla de referencia:** `src/App.tsx` se conserva (no se toca) como referencia del contenido migrado. **No borrar.**
 - Detalle: imports dentro de `src/` usan path explícito con `.js`/`.jsx` (ej. `'../widgets/Navbar/index.js'`) porque rolldown/Vite no resuelve imports por carpeta en Windows sin chocar con archivos glob (`./app` chocaba con `src/App.tsx`).
+- **Layout extraído:** `MainLayout` en `app/layouts/` compone `Navbar` + `<main>` + `Footer` y recibe las secciones por `children`. El root (`min-h-screen bg-background text-text`) ya no vive en `App.jsx`; la page solo pasa contenido.
+- **Gutter horizontal único:** primitiva `Container` en `shared/ui/` reemplaza el `max-w-6xl mx-auto px-6` duplicado en los 8 widgets. Las secciones mantienen su fondo/borde full-width (`section` queda full-bleed, `Container` dentro).
+- **Navbar restructurado:** 3 columnas con `justify-between` y `py-5` (nombre · nav · botón "Contactar" primary). `NAV_LINKS` = Home, Projects, About, Timeline ("Contact" salió, lo cubre el CTA). El hamburger sigue en mobile junto al botón. Hero ajustó `pt-16`→`pt-20` por la nueva altura del header fijo.
+- **Primitivas `Button`/`IconButton`:** creadas en `shared/ui` y reemplazados los botones/links duplicados (Navbar CTA+hamburger, Hero CTAs, Projects acciones, Contact submit+CV, Footer icons). Button: variantes primary/secondary/ghost, `px-5 py-2`, icono 24px, `href`→`<a>`. IconButton: `size md/sm`, mismas variantes. Estructura uniforme: el ícono va envuelto en `<span aria-hidden>` y el texto del Button en otro `<span>` (`etiqueta → span → svg/texto`).
+- **Fuente Inter:** cargada desde Google Fonts (400/500/600/700) en `index.html` y aplicada en `globals.css`. Base de `Button` usa `text-sm font-medium`; el `gap-2` separa ícono y texto en todos los botones con ícono.
+- **NavbarItem + sección activa:** `widgets/Navbar/ui/NavbarItem.jsx` (presentacional: `label`, `href`, `active`, `className=...`), usado en nav desktop y menú móvil. El subrayado vive en un `<span>` interno (`px-4 py-2 border-b-2`); el `<a>` es el target (en mobile recibe `className="w-full flex justify-center"` para que toda la fila sea zona de click y la etiqueta quede centrada). La sección activa la detecta `useActiveSection` (IntersectionObserver, banda central) en `shared/hook/`. Estado: activo `border-primary` + `text-primary`; inactivo `border-transparent` (subrayado invisible).
+- **Navbar hide-on-scroll:** toda la lógica en `shared/hook/` — `useHideOnScroll` (scroll, threshold 200) y `useNavbarVisibility` (composición: oculto al bajar si no está en hover ni el menú abierto; `reveal`/`unreveal` para hover). El componente solo presenta: `-translate-y-full` + `duration-300 motion-reduce:transition-none`, franja trigger `h-4` en el borde superior cuando está oculto.
 
 **Pendiente (en orden sugerido):**
 1. Crear primitivas en `shared/ui` (`Button`, `Card`, `Badge`, `SectionLabel`) y reemplazar duplicados: focus ring (`focus:ring-accent` + `active:scale-[0.98]`) en links/botones, padding base `py-3 px-5`, unificar radio del CTA "Download CV" (`rounded` vs `rounded-xl`), ajustar jerarquía tipográfica al spec (h1 `text-4xl→5xl font-semibold`, h3 `text-lg font-medium`).
@@ -62,4 +70,4 @@ Si cambiás la estructura de carpetas, agregás una capa nueva (ej. `pages/` cua
 
 ## Convención de sesiones
 
-Una sesión por unidad de trabajo (un widget, un ajuste de diseño, el setup inicial), no una sesión única para todo el proyecto. Este archivo se recarga solo al empezar cada sesión nueva — no hace falta pegar `architecture.md`/`rules.md`/`design.md` a mano cada vez.
+Una sesión por unidad de trabajo (un widget, un ajuste de diseño, el setup inicial), no una sesión única para todo el proyecto. Este archivo se recarga solo al empezar cada sesión nueva — no hace falta pegar `architecture.md`/`rules.md`/`design.md` a mano cada vez. Cada sesión agrega su entrada al `CHANGELOG.md` (sección por fecha, más reciente arriba) en el mismo cambio que el código.

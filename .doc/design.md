@@ -32,22 +32,25 @@ Adaptado del sistema de Uloom, filtrado para un sitio de una sola página con la
 ## 2. Lenguaje visual
 
 - **Shape lock:** botones → `rounded`; cards y contenedores grandes (Proyecto, sección del timeline) → `rounded-lg` o `rounded-xl` (elegir uno y mantenerlo consistente en todo el sitio — no mezclar ambas escalas).
-- **Padding:** cards → `p-5` como base; botones → `py-3 px-5`. Overrides puntuales van por `className`, no se redefine el default.
+- **Padding:** cards → `p-5` como base; botones → `px-5 py-2`. Overrides puntuales van por `className`, no se redefine el default.
+- **Botones:** primitiva `Button` en `shared/ui` con variantes `primary` (`bg-primary hover:brightness-110`), `secondary` (outline `border-text/10` hover `border-primary/50`) y `ghost` (sin borde, `text-text/60` hover `bg-text/5`). Icono opcional siempre a 24px. `IconButton` para botones de solo ícono con `size="md"` (w-9 h-9, ícono 24) y `size="sm"` (w-8 h-8, ícono 20), mismas variantes.
 - **Bordes:** contornos de card → `border-secondary/40`; divisores internos más sutiles que el borde exterior.
 - **Sombras:** mantener discreto — `shadow-sm` en cards como mucho. Nada de `shadow-xl` o glow, no encaja con "sobrio, no sci-fi".
 - **Focus ring:** `focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-accent focus:ring-offset-background` — importante para accesibilidad de teclado en los links de navbar y botones de contacto.
 - **Feedback táctil:** `active:scale-[0.98]` en botones e íconos clickeables.
-- **Motion:** `duration-150` para hovers, `duration-200` para transiciones estándar (aparición de secciones al hacer scroll). Respetar `prefers-reduced-motion` — desactivar animaciones de scroll-reveal si el usuario lo tiene activado.
+- **Nav items:** subrayado `border-b-2` reservado siempre (sin layout shift). Activo → `border-primary` + `text-primary` (detectado por `useActiveSection`); inactivo → `border-transparent` + `text-text/60`, hover `text-text` (subrayado invisible). El subrayado vive en un `<span>` interno (`px-4 py-2`), por lo que se ajusta al texto. El `<a>` es el target: en desktop ajusta a contenido; en el menú móvil recibe `w-full flex justify-center` para abarcar toda la fila como zona de click, manteniendo la etiqueta y el subrayado centrados.
+- **Motion:** `duration-150` para hovers, `duration-200` para transiciones estándar (aparición de secciones al hacer scroll). El navbar se oculta al bajar el scroll (threshold 200px, vía `useNavbarVisibility`) con slide `duration-300` y se muestra al subir o al hacer hover en el borde superior; `motion-reduce:transition-none` si el usuario tiene `prefers-reduced-motion`. Respetar `prefers-reduced-motion` — desactivar animaciones de scroll-reveal si el usuario lo tiene activado.
 - **Iconos:** una sola librería consistente (Lucide, Tabler o Heroicons — elegir una, no mezclar). Tamaño 24px como base; 20px solo para iconos dentro de badges/tags compactos (stack tecnológico). `aria-hidden="true"` en iconos decorativos, `aria-label` en iconos que son el único contenido de un botón (GitHub, LinkedIn del footer).
 
 ## 3. Tipografía
 
-- **Fuente:** sans-serif sobria y profesional — Inter, IBM Plex Sans o similar. Una sola familia tipográfica en todo el sitio, sin mezclar con una serif decorativa.
+- **Fuente:** Inter, cargada vía Google Fonts (400/500/600/700, `display=swap`) en `index.html`. `font-family: 'Inter', system-ui, -apple-system, sans-serif` en `globals.css`. Una sola familia tipográfica en todo el sitio, sin mezclar con una serif decorativa.
 - **Jerarquía:**
   - `h1` (nombre en el Hero): `text-4xl` a `text-5xl`, `font-semibold`.
   - `h2` (título de cada sección — Proyectos, Stack, Contacto): `text-2xl` a `text-3xl`, `font-semibold`.
   - `h3` (título de proyecto individual dentro de una card): `text-lg`, `font-medium`.
   - Body: `text-base`, `font-normal`, `leading-relaxed` para bloques de texto (bio del About).
+  - Botones (`Button`): `text-sm font-medium` (en la base de la primitiva).
   - Metadata / labels pequeños (stack tags, fechas del timeline): `text-sm`, `text-secondary` o `text-text/70`.
 - **Pesos:** limitar a 2-3 pesos (`normal`, `medium`, `semibold`) — no cargar la fuente completa con 6+ variantes si no se usan, por performance.
 
