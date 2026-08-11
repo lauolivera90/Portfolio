@@ -4,6 +4,11 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: About me
+
+### Removed
+- Sección `Areas of expertise` completa del widget About (junto con el array `SKILLS_BIO` y el componente `Tag` local, que quedaban sin uso). El widget queda con la foto + la bio.
+
 ## 2026-08-11 — Sesión: Hero home
 
 ### Added

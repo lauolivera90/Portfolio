@@ -1,22 +1,5 @@
 import { Container } from '../../../shared/ui/index.js'
 
-const SKILLS_BIO = [
-  'Full Stack',
-  'System Design',
-  'API Architecture',
-  'Database Optimization',
-  'CI/CD',
-  'Team Leadership',
-]
-
-function Tag({ label }) {
-  return (
-    <span className="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-md bg-accent/15 text-accent border border-accent/25">
-      {label}
-    </span>
-  )
-}
-
 export function About() {
   return (
     <section id="about" className="py-24 border-t border-text/10">
@@ -48,17 +31,10 @@ export function About() {
               helping teams move fast without accumulating debt they can't repay. I've led migrations,
               performance tuning efforts, and platform re-architectures while keeping products live.
             </p>
-            <p className="text-text/60 text-base leading-relaxed mb-8">
+            <p className="text-text/60 text-base leading-relaxed">
               I communicate clearly with product and design, ship with attention to detail, and
               treat monitoring and observability as first-class features, not afterthoughts.
             </p>
-
-            <p className="text-xs font-semibold text-text/60 uppercase tracking-wider mb-4">Areas of expertise</p>
-            <div className="flex flex-wrap gap-2">
-              {SKILLS_BIO.map((s) => (
-                <Tag key={s} label={s} />
-              ))}
-            </div>
           </div>
         </div>
       </Container>
