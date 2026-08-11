@@ -4,6 +4,13 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: TechStack en lista con iconos
+
+### Changed
+- `TechStack` migra sus cards a la primitiva `Card variant="surface"` (`h-full`, mismo alto por fila) y los ítems dejan de ser badges: ahora son una lista vertical con icono + nombre (`flex items-center gap-3`, icono 20px `aria-hidden`).
+- Iconos de maqueta: pool local `MOCK_ICONS` de lucide asignado determinísticamente por posición (la data real con iconos se conecta al final). `techStack.js` sigue con strings.
+- Categoría va en el mismo body (sin banda de header), con el label actual.
+
 ## 2026-08-11 — Sesión: Modal más ancho (variante `xl`)
 
 ### Changed
