@@ -37,6 +37,7 @@ Leé siempre, en este orden, antes de tocar cualquier archivo:
 - **Primitivas `Card`, `Tag`, `Carousel` + `ProjectCard`:** `Card` en `shared/ui` (compound `CardHeader`/`CardBody`/`CardFooter`, body obligatorio, `px-5`/`py-5` en las tres secciones) con variantes `raised`/`surface` según el root donde se apoya — ver `design.md`. Solo el header se diferencia del body (banda un paso más clara + `border-b` de separación); body y footer comparten el color. `Tag` (badge de stack) como primitiva en `shared/ui`. `Carousel` (énfasis rotativo) en `shared/ui` con lógica en `shared/hook/useCarousel.js` — ver `design.md`. `ProjectCard` en `widgets/Projects/ui/`: body con imagen cover placeholder (`https://picsum.photos/200/300`, full-bleed con márgenes negativos, `object-cover`, `aspect-video`, `loading="lazy"`) + footer con título, descripción, 3 tags hardcoded de maqueta (`TAGS_MOCK`, **no consume `project.stack`** — la data se conecta al final), Live demo (`flex-1`) + Repo, y ghost "Ver mas" con flecha trailing (lucide `ArrowRight`) que recibe `onVerMas` y abre el modal. La imagen cover es placeholder externo — reemplazar por screenshot real (WebP en `shared/assets/images/`) antes del deploy. El grid de Projects es flex-wrap con 3 cards por fila (`w-full sm:w-1/2 lg:w-1/3`) y filas incompletas alineadas al `start`. Las acciones de la card están en un bloque con `gap-3` (Live demo `flex-1`, Repo, y "Ver mas").
 - **Primitiva `Modal` + `ProjectModal`:** `Modal` en `shared/ui` (compound `ModalHeader`/`ModalBody`/`ModalFooter`, reutiliza `Card` `raised`), sizes `sm`/`md`/`lg`/`xl`, overlay `z-[60]`, cierre por Escape/overlay/X (ver `design.md`). Toda la lógica (foco, trap de Tab, scroll lock, restauración de foco) en `shared/hook/useModalBehavior.js`. `ProjectModal` en `widgets/Projects/ui/` (patrón ProjectCard: reúne modal + contenido, `size="xl"`): header = título, capturas (Carousel, 3 imágenes mock = la de la card), descripción, secciones `Frontend`/`Backend`/`Herramientas` (mock) y footer con botones full-width. `Projects.jsx` maneja `activeProject` (null = cerrado). Capturas/tecnologías de maqueta — la data se conecta al final. Contact/TechStack todavía usan sus cards inline; migran cuando se toquen esos widgets.
 - **TechStack en lista con iconos:** las cards pasan a `Card variant="surface"` (`h-full`, mismo alto por fila) y cada categoría es una lista vertical de ítems `flex items-center gap-3` (icono 20px `aria-hidden` + nombre). Iconos de maqueta por `MOCK_ICONS` (lucide, por posición — data real con iconos al final).
+- **Timeline pulido:** título "My journey" (en inglés, resto del sitio en inglés). El marker de cada hito es un punto chico (`w-3 h-3 rounded-full`): neutral `bg-text/30` para años pasados, `bg-primary ring-4 ring-primary/20` para el hito actual (el último de la lista, `Today`). Fechas: mes + año en accent (ej. "May 2016"), meses de ejemplo en `shared/data/timeline.js` (último = `Aug 2026`) — placeholder hasta la data real.
 
 **Pendiente (en orden sugerido):**
 1. Crear primitivas en `shared/ui` (`Badge`, `SectionLabel`) y reemplazar duplicados: focus ring (`focus:ring-accent` + `active:scale-[0.98]`) en links/botones, padding base `py-3 px-5`, unificar radio del CTA "Download CV" (`rounded` vs `rounded-xl`), ajustar jerarquía tipográfica al spec (h1 `text-4xl→5xl font-semibold`, h3 `text-lg font-medium`).
@@ -46,10 +47,9 @@ Leé siempre, en este orden, antes de tocar cualquier archivo:
 5. Widget `Navbar` a pulir.
 6. Widget `Hero`.
 7. Widget `About`.
-8. Widget `Timeline`.
-9. Widget `Contact` (migrar su card "Direct contact" a `Card variant="surface"`).
-10. Widget `Footer`.
-11. SEO (meta tags, Open Graph) y checklist de accesibilidad/Lighthouse de `rules.md`.
+8. Widget `Contact` (migrar su card "Direct contact" a `Card variant="surface"`).
+9. Widget `Footer`.
+10. SEO (meta tags, Open Graph) y checklist de accesibilidad/Lighthouse de `rules.md`.
 
 No asumas que este orden es rígido — actualizalo si cambia la prioridad real de trabajo.
 

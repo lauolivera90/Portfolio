@@ -4,6 +4,14 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: Timeline con puntos, título "My journey" y fechas con mes
+
+### Changed
+- `Timeline` pasa de título "Career progression" a **"My journey"**.
+- Las burbujas con número dejan de existir: el marker ahora es un punto chico (`w-3 h-3`), neutral (`bg-text/30`) para años pasados y `bg-primary` con ring suave para el hito actual (Today, último de la lista).
+- Las fechas muestran **mes + año** (`{month} {year}` → ej. "May 2016"), con meses de ejemplo en `shared/data/timeline.js` (el último = `Aug 2026`) — placeholder, se ajustan junto con la data real.
+- Sin separador/bullet entre el mes y el año.
+
 ## 2026-08-11 — Sesión: TechStack en lista con iconos
 
 ### Changed
