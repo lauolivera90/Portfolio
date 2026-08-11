@@ -1,13 +1,13 @@
 import { ExternalLink } from 'lucide-react'
+import { SiGithub } from '@icons-pack/react-simple-icons'
 import { Button, Carousel, Modal, ModalBody, ModalFooter, ModalHeader, Tag } from '../../../shared/ui/index.js'
-import { IconGithub } from './ProjectCard.jsx'
 
-const SCREENSHOT_IMG = 'https://picsum.photos/200/300'
-const SCREENSHOTS_MOCK = [SCREENSHOT_IMG, SCREENSHOT_IMG, SCREENSHOT_IMG]
-
-const FRONTEND_MOCK = ['React', 'TypeScript', 'Redux']
-const BACKEND_MOCK = ['Node.js', 'PostgreSQL', 'Redis']
-const TOOLS_MOCK = ['Docker', 'GitHub Actions', 'Vercel']
+const STACK_SECTIONS = [
+  { key: 'frontend', label: 'Frontend' },
+  { key: 'backend', label: 'Backend' },
+  { key: 'database', label: 'Database' },
+  { key: 'tools', label: 'Tools' },
+]
 
 function TechSection({ label, items }) {
   return (
@@ -25,6 +25,9 @@ function TechSection({ label, items }) {
 export function ProjectModal({ project, onClose }) {
   if (!project) return null
 
+  const images = project.images.length > 0 ? project.images : ['https://picsum.photos/200/300']
+  const sections = STACK_SECTIONS.filter((s) => (project.stack[s.key]?.length ?? 0) > 0)
+
   return (
     <Modal open onClose={onClose} size="xl" ariaLabel={project.title}>
       <ModalHeader onClose={onClose}>
@@ -32,25 +35,25 @@ export function ProjectModal({ project, onClose }) {
       </ModalHeader>
 
       <ModalBody>
-        <Carousel ariaLabel="Capturas del proyecto">
-          {SCREENSHOTS_MOCK.map((src, i) => (
-            <img key={i} src={src} alt={project.title} width="200" height="300" loading="lazy" />
+        <Carousel ariaLabel="Project screenshots">
+          {images.map((src, i) => (
+            <img key={i} src={src} alt={`${project.title} screenshot ${i + 1}`} width="200" height="300" loading="lazy" />
           ))}
         </Carousel>
 
-        <p className="text-sm text-text/60 leading-relaxed">{project.description}</p>
+        <p className="text-sm text-text/60 leading-relaxed">{project.fullDescription}</p>
 
-        <TechSection label="Frontend" items={FRONTEND_MOCK} />
-        <TechSection label="Backend" items={BACKEND_MOCK} />
-        <TechSection label="Herramientas" items={TOOLS_MOCK} />
+        {sections.map((s) => (
+          <TechSection key={s.key} label={s.label} items={project.stack[s.key]} />
+        ))}
       </ModalBody>
 
       <ModalFooter>
         <div className="flex gap-3">
-          <Button variant="primary" className="flex-1" href={project.demo} icon={<ExternalLink />}>
+          <Button variant="primary" className="flex-1" href={project.demoUrl} icon={<ExternalLink />}>
             Live demo
           </Button>
-          <Button variant="secondary" href={project.repo} icon={<IconGithub />}>
+          <Button variant="secondary" href={project.repoUrl} icon={<SiGithub color="currentColor" />}>
             Repo
           </Button>
         </div>

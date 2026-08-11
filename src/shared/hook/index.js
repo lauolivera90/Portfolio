@@ -1,5 +1,6 @@
 export { useActiveSection } from './useActiveSection.js'
 export { useCarousel } from './useCarousel.js'
 export { useHideOnScroll } from './useHideOnScroll.js'
+export { useLines } from './useLines.js'
 export { useModalBehavior } from './useModalBehavior.js'
 export { useNavbarVisibility } from './useNavbarVisibility.js'

@@ -1,4 +1,4 @@
-import { timeline } from '../../../shared/data/timeline.js'
+import { sections, timeline } from '../../../shared/data/index.js'
 import { Container } from '../../../shared/ui/index.js'
 
 export function Timeline() {
@@ -7,9 +7,9 @@ export function Timeline() {
       <Container>
         <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
           <span className="w-4 h-px bg-accent" />
-          Timeline
+          {sections.timeline.eyebrow}
         </p>
-        <h2 className="text-3xl font-bold text-text mb-16">My journey</h2>
+        <h2 className="text-3xl font-bold text-text mb-16">{sections.timeline.title}</h2>
 
         <div className="hidden md:block">
           <div className="relative">

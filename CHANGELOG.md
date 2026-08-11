@@ -4,6 +4,38 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: cards de proyectos con alto uniforme (descripción ajustable)
+
+### Added
+- Hook `src/shared/hook/useLines.js` (medición de líneas con `ResizeObserver` + guard de ancho, con cleanup) — exportado por el barrel de hooks.
+
+### Changed
+- `ProjectCard`: descripción con `-webkit-line-box` clamp **dinámico** — reserva el alto de la descripción más larga del grid (si ninguna envuelve a 2 líneas, no fuerza la segunda). Card `h-full flex flex-col`, footer `flex-1` y acciones ancladas al fondo (`mt-auto`): cards, tags y botones alineados por fila.
+- `Projects.jsx`: recolecta las líneas de cada card (`reportLines` por `project.id`) y pasa `maxLines` calculado como máximo del grid.
+
+## 2026-08-11 — Sesión: consumición de data (contenido centralizado)
+
+### Added
+- `src/shared/data/profile.js` (identidad: name/initials/role, heroBio, aboutBio[], `cv` y `socials` con urls) y `src/shared/data/sections.js` (copy por sección: eyebrow/título/subtítulo + labels sueltos + `nav`/CTA). Barrel `src/shared/data/index.js`.
+- Iconos de marca con `@icons-pack/react-simple-icons` (paquete `Si*`). Reemplacé SVG inline de Github/Linkedin en Contact/Footer; SVGs sueltos de downloads/menu → lucide. `IconLinkedin` local en `shared/ui/BrandIcon` porque el paquete instalado no trae LinkedIn (ni Amazon → `Cloud` de lucide como fallback).
+
+### Changed
+- `projects.js` pasa al shape definitivo: `id` (string), `title`, `shortDescription` (card), `fullDescription` (modal), `stack: { frontend, backend, database, tools }`, `demoUrl`, `repoUrl`, `images[]` (picsum de relleno hasta subir screenshots). Card: cover = `images[0]` + tags = stack aplanado top 4 (recién salen los `TAGS_MOCK`). Modal: secciones = grupos de stack no vacíos (Frontend/Backend/Database/Tools) + carousel con `images`.
+- `techStack.js` → items `{ name, icon, onHero }` con iconos de Simple Icons (adiós `MOCK_ICONS` por posición). El Hero derive `techStack.filter(onHero)` (default: React, TypeScript, Node.js, PostgreSQL, Docker) — sin lista duplicada.
+- Widgets consumen todo desde data (Navbar brand/nav/CTA, Hero, About, Projects, TechStack, Contact direct/voluntario, Footer socials y copyright, Timeline). Los `.jsx` quedan presentacionales.
+
+## 2026-08-11 — Sesión: contenido de Projects y Contact
+
+### Changed
+- `Projects`: título a "What I've built" + subtítulo "Two full-stack projects, from database design to deployment."
+- `Contact`: subtítulo a "Have a role in mind, or want to talk about a project? I'd love to hear from you."
+
+## 2026-08-11 — Sesión: iconos en botones de contacto
+
+### Changed
+- Botón "Send message" del form de `Contact` ahora lleva icono lucide `Send` (props `icon` del `Button`).
+- CTA "Contactar" del `Navbar` ahora lleva icono lucide `Mail`.
+
 ## 2026-08-11 — Sesión: Timeline con puntos, título "My journey" y fechas con mes
 
 ### Changed

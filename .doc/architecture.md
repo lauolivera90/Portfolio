@@ -104,9 +104,12 @@ src/
     lib/                  (helpers puros sin JSX: formatDate, cn, etc.)
       cn.js
       index.js
-    data/                 (contenido estático del portafolio)
-      projects.js
-      techStack.js
+    data/                 (contenido estático del portafolio — la fuente única de contenido)
+      index.js            (barrel)
+      profile.js          (identidad: nombre, rol, bio, hero, CV y socials con urls/iconos)
+      sections.js         (copy de secciones: eyebrow/título/subtítulo por widget + nav/CTA)
+      projects.js         (proyectos: id, title, short/fullDescription, stack {frontend, backend, database, tools}, demoUrl, repoUrl, images[])
+      techStack.js        (techs por categoría: { name, icon, onHero } — onHero decide presencia en el Hero)
       timeline.js
     assets/
       images/

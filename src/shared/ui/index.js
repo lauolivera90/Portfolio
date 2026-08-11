@@ -1,4 +1,5 @@
 export { Button } from './Button/Button.jsx'
+export { IconLinkedin } from './BrandIcon/BrandIcon.jsx'
 export { Carousel } from './Carousel/Carousel.jsx'
 export { Card, CardBody, CardFooter, CardHeader } from './Card/Card.jsx'
 export { Container } from './Container/Container.jsx'
