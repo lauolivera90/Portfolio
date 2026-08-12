@@ -57,7 +57,7 @@ const en = [
     status: "in-development",
     demoType: "deployment", // "video" cuando exista una grabación; "download" cuando haya release
     demoUrl: null,
-    repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/uloom" }], // TODO: confirmar URL exacta del repo
+    repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/Uloom/tree/dev" }],
   }
 ]
 
@@ -120,7 +120,7 @@ const es = [
     status: "in-development",
     demoType: "deployment", // "video" cuando exista una grabación; "download" cuando haya release
     demoUrl: null,
-    repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/uloom" }], // TODO: confirmar URL exacta del repo
+    repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/Uloom/tree/dev" }],
   }
 ]
 

@@ -4,6 +4,11 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-12 — Sesión: repo de Uloom apunta a la rama dev
+
+### Changed
+- `shared/data/projects.js`: `uloom.repoUrl` (en `en` y `es`) pasa a `https://github.com/lauolivera90/Uloom/tree/dev` (rama `dev`, placeholder viejo con TODO eliminado — URL confirmada).
+
 ## 2026-08-12 — Sesión: repos de Nexo (frontend + backend)
 
 ### Changed
