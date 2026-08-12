@@ -15,14 +15,21 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
     ...project.stack.database.slice(0, 1),
   ]
   const { cover } = projectImages(project.id)
-  const coverSrc = cover ?? 'https://picsum.photos/200/300'
+  const coverSrc = cover ?? 'https://picsum.photos/1600/900'
 
   useEffect(() => {
     onLines(project.id, lines)
   }, [lines, onLines, project.id])
 
   return (
-    <Card variant="raised" className="h-full flex flex-col hover:border-primary/40 transition-colors">
+    <Card
+      variant="raised"
+      className="h-full flex flex-col hover:border-primary/40 transition-colors cursor-pointer"
+      onClick={(event) => {
+        if (event.target.closest('a, button')) return
+        onVerMas()
+      }}
+    >
       <CardBody>
         <img
           src={coverSrc}
@@ -30,7 +37,7 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
           width="200"
           height="300"
           loading="lazy"
-          className="block w-full aspect-video object-cover -mx-5 -mt-5 -mb-5"
+          className="block w-[calc(100%+2.5rem)] max-w-none aspect-video object-cover -mx-5 -mt-5 -mb-5"
         />
       </CardBody>
 

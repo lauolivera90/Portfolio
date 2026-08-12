@@ -24,7 +24,7 @@ export function Projects() {
           {sections.projects.subtitle}
         </p>
 
-        <div className="flex flex-wrap gap-y-5 -mx-2.5">
+        <div className="flex flex-wrap gap-y-5 -mx-2.5 justify-center">
           {projects.map((p) => (
             <div key={p.id} className="w-full sm:w-1/2 lg:w-1/3 px-2.5">
               <ProjectCard

@@ -156,25 +156,30 @@ Hay dos ubicaciones válidas según el tipo de imagen — no es indistinto:
   ```
   shared/assets/images/
     profile/
-      hero.webp
+      Hero.webp
     projects/
       <project-id>/        (carpeta = project.id, ej. "nexo", "antisocial-net", "uloom")
-        img0.webp          (miniatura de la card — NUNCA en el carousel)
-        img1.webp          (capturas del carousel/lightbox del modal)
-        img2.webp
+        Thumb.webp          (miniatura de la card — NUNCA en el carousel)
+        Nexo_Materials1.webp   (captura desktop — va antes que la mobile)
+        Nexo_Materials2.webp   (captura mobile de la misma sección)
         ...
   ```
-  **Convención de screenshots:** carpeta = `project.id`. `img0` es siempre la miniatura de la card; `img1+` son las capturas del carousel del modal (img0 queda excluida). Se resuelven con `shared/lib/projectImages.js` — usa `import.meta.glob` (eager) sobre `projects/*/img*`, devuelve `{ cover, carousel }` ordenado numéricamente (`img10` después que `img9`). Con cero archivos no rompe el build: `cover` es `null` (la card usa fallback picsum) y `carousel` queda `[]` (el modal oculta el carousel). Formato recomendado: `.webp` (el glob también tolera png/jpg/jpeg). `String` de ejemplo:
+  **Convención de screenshots:** carpeta = `project.id`. `Thumb.webp` es siempre la miniatura de la card; el resto de archivos son las capturas del carousel del modal (Thumb queda excluida). **Nombres de capturas:** sufijo `1` = versión desktop, `2` = versión mobile de la misma sección. El orden del carousel agrupa por sección mostrando primero la desktop (ej. `Materials1, Materials2, Planner1, Planner2...`); capturas sin sufijo numérico (una sola versión) quedan entre sus secciones por orden alfabético. Se resuelven con `shared/lib/projectImages.js` — usa `import.meta.glob` (eager) sobre `projects/*/*`, separa `Thumb.webp` (cover) y ordena el resto con `localeCompare` numérico + `sensitivity: 'base'`, devolviendo `{ cover, carousel }`. Con cero archivos no rompe el build: `cover` es `null` (la card usa fallback picsum) y `carousel` queda `[]` (el modal oculta el carousel). Formato recomendado: `.webp` (el glob también tolera png/jpg/jpeg). `String` de ejemplo:
   ```js
   // shared/lib/projectImages.js
-  const imageModules = import.meta.glob('/src/shared/assets/images/projects/*/img*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' })
+  const imageModules = import.meta.glob('/src/shared/assets/images/projects/*/*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' })
+  const THUMB_RE = /\/thumb\.(webp|png|jpg|jpeg)$/i
   export function projectImages(projectId) {
     const base = `/src/shared/assets/images/projects/${projectId}/`
-    const urls = Object.keys(imageModules)
+    const files = Object.keys(imageModules)
       .filter((key) => key.startsWith(base))
-      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-      .map((key) => imageModules[key])
-    return { cover: urls[0] ?? null, carousel: urls.slice(1) }
+      .map((key) => ({ key, url: imageModules[key] }))
+    const thumb = files.find((f) => THUMB_RE.test(f.key)) ?? null
+    const carousel = files
+      .filter((f) => f !== thumb)
+      .sort((a, b) => a.key.localeCompare(b.key, undefined, { numeric: true, sensitivity: 'base' }))
+      .map((f) => f.url)
+    return { cover: thumb?.url ?? null, carousel }
   }
   ```
   Los widgets lo consumen así: `ProjectCard` usa `cover`, `ProjectModal` usa `carousel`.

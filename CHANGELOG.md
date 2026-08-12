@@ -4,7 +4,61 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
-## 2026-08-12 — Sesión: pulido tema claro + iconos sociales con color de marca
+## 2026-08-12 — Sesión: fix real del cover full-bleed (max-w-none) + Thumb.webp a 16:9 exacto
+
+### Fixed
+- `ProjectCard`: el fix de la sesión anterior (`w-[calc(100%+2.5rem)]`) **no funcionaba** — el preflight de Tailwind v4 fuerza `img { max-width: 100% }`, que clamp-ea el `calc` de vuelta al ancho del content-box (card menos los dos `px-5`) y los `-mx-5` solo lo desplazaban sin estirarlo: seguía habiendo ~2.5rem de fondo de card al **borde derecho**. Ahora el cover lleva **`max-w-none`** (anula el `max-width` del preflight) y de verdad cubre la card de borde a borde.
+- El fallback picsum pasa de `200/300` (ratio portrait) a **`1600/900` (16:9)** para que el placeholder no se recorte raro.
+
+### Images
+- Las 3 `Thumb.webp` regeneradas a **1920×1080 (16:9 exacto)** con `sharp resize(1920, 1080, { fit: 'cover' })` desde las originales: `nexo` y `antisocial-net` eran 2880×2160 (4:3 — con `object-cover` en el box 16:9 la foto perdía ~25% del alto, ~270px arriba y abajo) y `uloom` era 1920×1009 (perdía ~6% del ancho). Con 16:9 exacto el cover ya no recorta contenido. Originales respaldadas en temp local de la máquina.
+
+### Docs
+- `.doc/design.md` §Cards: patrón full-bleed corregido — se documenta el `max-w-none` obligatorio (por el preflight `img { max-width: 100% }`) y el requisito de `Thumb.webp` en 16:9 exacto.
+- `AGENTS.md`: bullets de `ProjectCard` y "Screenshots por proyecto" actualizados (max-w-none + thumbs 16:9).
+- `CHANGELOG.md`: esta entrada.
+
+## 2026-08-12 — Sesión: card de proyecto clickeable + fix de cover full-bleed + filas centradas
+
+### Fixed
+- `ProjectCard`: el cover quedaba **cortado al borde derecho** — `w-full` mide solo el content-box (card menos los dos `px-5` del body) y los márgenes negativos lo desplazaban sin estirarlo. Ahora `w-[calc(100%+2.5rem)]` (+ los `-mx-5 -mt-5 -mb-5` existentes) hace que la imagen cubra todo el ancho de la card.
+
+### Changed
+- `Card` (`shared/ui`): disemina `...rest` al `<div>` root para aceptar `onClick`/props extra sin wrappers.
+- `ProjectCard`: **toda la card abre el modal** — `onClick` en el root con guard `event.target.closest('a, button')` (Demo/Repo/View more/dropdown no lo disparan); `cursor-pointer` para feedback. "View more" sigue siendo el control de teclado (a11y intacta).
+- `Projects`: el grid de cards agrega `justify-center` → las **filas incompletas quedan centradas** (antes alineadas al `start`, dejando espacio solo a la derecha).
+
+### Docs
+- `.doc/design.md` §Cards: corregido el patrón documentado de full-bleed (`w-full` → `w-[calc(100%+2.5rem)]` + explicación).
+- `AGENTS.md`: bullets de `ProjectCard`/grid actualizados (card clickeable con guard, filas centradas, cover con cálculo nuevo).
+- `CHANGELOG.md`: esta entrada.
+
+## 2026-08-12 — Sesión: Carousel recortado a 3 + teaser "Ver todas" y Lightbox con controles abajo
+
+### Changed
+- `shared/ui/Carousel/Carousel.jsx`: **siempre muestra 3 slots** — la activa (`flex-[2]`) + las 2 siguientes (con wrap `% total`) en `flex-col` a la derecha (ya no se apiIan todas las capturas). Con `total === 2` hay 1 thumb derecha, con `total === 1` no hay columna. **Teaser "Ver todas" cuando `total > 3`:** el tercer slot tiene la imagen **desenfocada** (`[&_img]:blur-sm [&_img]:scale-110`) + overlay `bg-background/40` con label **estilo secondary de Button sin icono** (span estilizado dentro del `button` del slot → evita botones anidados); su click hace `onImageClick(0)` → abre el Lightbox en la **primera** captura. Nueva prop `viewAllLabel`. Con exactamente 3 capturas no hay teaser.
+- `shared/ui/Lightbox/Lightbox.jsx`: los **controles pasan a abajo y centrados** — fila `mt-4` con `[ChevronLeft]` `[dots]` `[ChevronRight]` (ghost sm, dots activo `bg-primary` clickeables) que reemplaza las flechas al costado de la imagen. Imagen pasa a `max-h-[70vh]` (deja espacio a los controles). Nueva prop `total` + `index` (dots) y `onGoTo`. **El X de cerrar pasa a `variant="secondary"`** (borde visible, `bg-background`, esquina superior derecha).
+- `widgets/Projects/ui/ProjectModal.jsx`: wiring — `<Carousel viewAllLabel={t.viewAll}>` y `<Lightbox total={total} index={zoomIndex} onGoTo={setZoomIndex}>`.
+- `shared/data/sections.js`: label `projects.viewAll` = `'View all'` (en) / `'Ver todas'` (es).
+
+### Docs
+- `.doc/design.md`: bullets Carousel y Lightbox reescritos con la nueva lógica + bullet del modal de proyecto con el wiring de `viewAllLabel`/`total`/`index`/`onGoTo`.
+- `AGENTS.md`: bullets de Carousel y ProjectModal/Lightbox actualizados (3 slots + teaser, controles del lightbox abajo, cerrar secondary).
+- `CHANGELOG.md`: esta entrada.
+
+## 2026-08-12 — Sesión: screenshots reales enganchados (convención `Thumb.webp` + capturas desktop/mobile)
+
+### Changed
+- `shared/lib/projectImages.js`: nueva convención de carpetas. Glob pasa de `projects/*/img*` a `projects/*/*.{webp,png,jpg,jpeg}`; **cover = `Thumb.webp`** (case-insensitive, nunca en el carousel) y el resto son capturas del carousel ordenadas con `localeCompare` numérico + `sensitivity: 'base'` — **agrupa por sección con la desktop (`...1`) primero y la mobile (`...2`) después** (ej. `Nexo_Materials1, Nexo_Materials2, Nexo_Planner1...`). Sin archivos sigue devolviendo `cover: null` / `carousel: []` (fallback intacto).
+- `widgets/About/ui/About.jsx`: foto real de perfil importada de `profile/Hero.webp` (antes `profile/hero.png`, que no existía → build roto).
+
+### Images
+- Imágenes reales subidas por proyecto en `shared/assets/images/projects/{nexo,antisocial-net,uloom}` (`Thumb.webp` por proyecto + capturas `*1.webp`/`*2.webp`). `profile/Hero.webp` para la sección About.
+
+### Docs
+- `.doc/architecture.md` §3: convención nueva documentada + snippet de `projectImages.js` actualizado; `hero.webp` → `Hero.webp`.
+- `AGENTS.md`: bullet "Screenshots por proyecto" y punto 2 de "Pendiente" actualizados (los screenshots ya no son pendiente) + nota de About con el archivo correcto.
+- `CHANGELOG.md`: esta entrada.
 
 ### Added
 - `socials[].color` en `shared/data/profile.js`: color oficial de cada marca — LinkedIn `#0A66C2`, Gmail `#EA4335`, GitHub `currentColor` (su marca `#181717` es negra, no se vería en el tema oscuro).

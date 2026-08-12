@@ -1,6 +1,6 @@
 import { useLanguage } from '../../../shared/i18n/index.js'
 import { Container, SectionLabel } from '../../../shared/ui/index.js'
-import heroPhoto from '../../../shared/assets/images/profile/hero.png'
+import heroPhoto from '../../../shared/assets/images/profile/Hero.webp'
 
 export function About() {
   const { profile, sections } = useLanguage()

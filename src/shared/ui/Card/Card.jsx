@@ -7,10 +7,13 @@ const surfaces = {
   surface: { root: 'bg-text/5', section: 'bg-text/10' },
 }
 
-export function Card({ variant = 'raised', className = '', children }) {
+export function Card({ variant = 'raised', className = '', children, ...rest }) {
   return (
     <CardContext.Provider value={variant}>
-      <div className={`rounded-xl border border-text/10 overflow-hidden ${surfaces[variant].root} ${className}`}>
+      <div
+        className={`rounded-xl border border-text/10 overflow-hidden ${surfaces[variant].root} ${className}`}
+        {...rest}
+      >
         {children}
       </div>
     </CardContext.Provider>

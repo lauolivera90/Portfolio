@@ -24,6 +24,7 @@ export const sections = {
       },
       screenshots: 'Project screenshots',
       screenshotAlt: '{name} screenshot {n}',
+      viewAll: 'View all',
     },
     techStack: {
       eyebrow: 'Tech stack',
@@ -88,7 +89,7 @@ export const sections = {
       liveDemo: 'Demo en vivo',
       watch: 'Ver',
       inDevelopment: 'En desarrollo',
-      repo: 'Repositorio',
+      repo: 'Repo',
       repoFrontend: 'Frontend',
       repoBackend: 'Backend',
       stack: {
@@ -99,6 +100,7 @@ export const sections = {
       },
       screenshots: 'Capturas del proyecto',
       screenshotAlt: 'Captura {n} de {name}',
+      viewAll: 'Ver todas',
     },
     techStack: {
       eyebrow: 'Stack tecnológico',

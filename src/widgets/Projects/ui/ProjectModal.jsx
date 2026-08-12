@@ -55,6 +55,7 @@ export function ProjectModal({ project, onClose }) {
               ariaLabel={t.screenshots}
               paused={zoomIndex !== null}
               onImageClick={setZoomIndex}
+              viewAllLabel={t.viewAll}
             >
               {carousel.map((src, i) => (
                 <img
@@ -86,6 +87,9 @@ export function ProjectModal({ project, onClose }) {
           open
           src={carousel[zoomIndex]}
           alt={screenshotAlt(t.screenshotAlt, project.title, zoomIndex + 1)}
+          total={total}
+          index={zoomIndex}
+          onGoTo={setZoomIndex}
           onPrev={() => setZoomIndex((i) => (i - 1 + total) % total)}
           onNext={() => setZoomIndex((i) => (i + 1) % total)}
           onClose={() => setZoomIndex(null)}
