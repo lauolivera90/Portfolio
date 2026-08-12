@@ -41,7 +41,7 @@ export function Contact() {
               </CardBody>
             </Card>
 
-            <Button variant="secondary" href={profile.cv.url} icon={<Download />}>
+            <Button variant="secondary" href={profile.cv.url} download icon={<Download />}>
               {profile.cv.label}
             </Button>
           </div>

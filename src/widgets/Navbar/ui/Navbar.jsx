@@ -29,9 +29,6 @@ export function Navbar() {
           href="#home"
           className="flex items-center gap-2.5 group rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-background"
         >
-          <div className="w-8 h-8 rounded-md bg-primary flex items-center justify-center flex-shrink-0">
-            <span className="text-on-primary text-sm font-bold leading-none">{profile.initials}</span>
-          </div>
           <span className="text-text font-semibold text-sm tracking-tight">{profile.name}</span>
         </a>
 

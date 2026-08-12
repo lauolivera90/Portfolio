@@ -4,6 +4,30 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-12 — Sesión: CV por idioma en los botones de descarga (download forzado)
+
+### Changed
+- `shared/data/profile.js`: `cv.url` por-locale apunta al PDF real — `en` → `/CV_Lautaro_Olivera_EN.pdf`, `es` → `/CV_Lautaro_Olivera.pdf`. Los botones de `Hero` y `Contact` ya resolvían `profile.cv` vía `useLanguage()`, así que con solo esto descargan el CV del idioma activo.
+- `Hero` y `Contact`: el botón "Download CV"/"Descargar CV" ahora lleva el atributo **`download`** (fuerza la descarga en vez de abrir el PDF en el navegador).
+
+### Removed
+- `public/cv.pdf` (placeholder de 662 bytes) — quedaba sin referencias al apuntar `cv.url` a los CV reales.
+
+### Docs
+- `AGENTS.md`: bullet del CV actualizado y quitado `public/cv.pdf` del Pendiente n.º 2.
+- `.doc/architecture.md`: snippet de `public/` con los dos CV reales.
+- `CHANGELOG.md`: esta entrada.
+
+## 2026-08-12 — Sesión: sacar las iniciales del Navbar
+
+### Changed
+- `Navbar`: eliminado el **box de iniciales** (`w-8 h-8 rounded-md bg-primary` con `profile.initials`) — queda solo el nombre (`profile.name`).
+- `shared/data/profile.js`: se elimina `initials: 'LBO'` (quedaba sin consumidores).
+
+### Docs
+- `AGENTS.md` y `.doc/design.md`: actualizadas las referencias a `initials` / "box de iniciales" del Navbar.
+- `CHANGELOG.md`: esta entrada.
+
 ## 2026-08-12 — Sesión: fix real del cover full-bleed (max-w-none) + Thumb.webp a 16:9 exacto
 
 ### Fixed

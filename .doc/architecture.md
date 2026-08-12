@@ -145,7 +145,8 @@ src/
 public/
   favicon.ico
   og-image.png            (imagen para Open Graph, ver design.md/SEO)
-  cv.pdf                  (o donde apunte el botón "Descargar CV")
+  CV_Lautaro_Olivera.pdf          (CV en español — botón "Descargar CV")
+  CV_Lautaro_Olivera_EN.pdf       (CV en inglés — botón "Download CV")
 ```
 
 ## 3. Dónde van las imágenes (y por qué)

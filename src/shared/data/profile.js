@@ -3,7 +3,6 @@ import { IconLinkedin } from '../ui/index.js'
 
 export const profile = {
   name: 'Lautaro B. Olivera',
-  initials: 'LBO',
   en: {
     role: 'Full Stack Developer',
     heroBio:
@@ -15,7 +14,7 @@ export const profile = {
 
       "I care about staying organized: I document my work thoroughly and try to communicate clearly about what I'm doing and what's next. I'm also focused on writing clean code, something I'm still actively working on improving. Outside of code, I go to the gym regularly and try to keep learning something new — whether that's a language, a technology, or anything else that catches my interest.",
     ],
-    cv: { label: 'Download CV', url: '/cv.pdf' },
+    cv: { label: 'Download CV', url: '/CV_Lautaro_Olivera_EN.pdf' },
   },
   es: {
     role: 'Desarrollador Full Stack',
@@ -28,7 +27,7 @@ export const profile = {
 
       'Me importa mantener el orden: documento bien mi trabajo e intento comunicar con claridad qué estoy haciendo y qué sigue. También estoy enfocado en escribir código limpio, algo en lo que sigo trabajando para mejorar. Fuera del código, voy al gimnasio con regularidad e intento seguir aprendiendo algo nuevo — ya sea un idioma, una tecnología o cualquier otra cosa que despierte mi interés.',
     ],
-    cv: { label: 'Descargar CV', url: '/cv.pdf' },
+    cv: { label: 'Descargar CV', url: '/CV_Lautaro_Olivera.pdf' },
   },
 }
 

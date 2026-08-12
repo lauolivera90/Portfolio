@@ -28,7 +28,7 @@ Adaptado del sistema de Uloom, filtrado para un sitio de una sola página con la
     color-scheme: light;
   }
   ```
-- **Temas claro/oscuro:** el toggle (ver `SettingsMenu` en la Navbar) cambia `data-theme` en `<html>`; los componentes no usan clases `dark:` — los tokens se flipan solos en CSS. `--color-on-primary` es el texto/ícono sobre `bg-primary` (buttons primary, box de iniciales): se mantiene `#eff2f4` en ambos temas porque `primary` es siempre el navy `#004B87`.
+- **Temas claro/oscuro:** el toggle (ver `SettingsMenu` en la Navbar) cambia `data-theme` en `<html>`; los componentes no usan clases `dark:` — los tokens se flipan solos en CSS. `--color-on-primary` es el texto/ícono sobre `bg-primary` (buttons primary): se mantiene `#eff2f4` en ambos temas porque `primary` es siempre el navy `#004B87`.
 - **Mapeo a Tailwind v4:** los `--color-*` del `@theme` generan directamente las utilidades (`bg-background`, `text-text`, `border-secondary/40`, `text-on-primary`, etc.). No hay `tailwind.config.js` — la configuración de tema vive en el CSS (`tailwindcss` v4 se carga como plugin de Vite).
 - **Regla:** los componentes usan SOLO los tokens (`bg-primary`, `text-text`, `bg-background`, `border-secondary/40`, etc.). Nunca hex hardcodeado ni colores de la paleta por defecto de Tailwind (`bg-blue-600`, `text-gray-100`, etc.).
 

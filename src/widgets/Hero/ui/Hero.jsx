@@ -25,7 +25,7 @@ export function Hero() {
             <Button variant="primary" href="#projects">
               {sections.hero.ctaProjects}
             </Button>
-            <Button variant="secondary" href={profile.cv.url} icon={<Download />}>
+            <Button variant="secondary" href={profile.cv.url} download icon={<Download />}>
               {profile.cv.label}
             </Button>
           </div>
