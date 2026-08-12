@@ -15,7 +15,10 @@ const en = [
     status: "finished",
     demoType: "deployment",
     demoUrl: "https://desapp-frontend.onrender.com",
-    repoUrl: [], // TODO: agregar cuando esté público
+    repoUrl: [
+      { type: "frontend", url: "https://github.com/DesApp-2026c1-Grupo-3/frontend" },
+      { type: "backend", url: "https://github.com/DesApp-2026c1-Grupo-3/backend" },
+    ],
   },
   {
     id: "antisocial-net",
@@ -75,7 +78,10 @@ const es = [
     status: "finished",
     demoType: "deployment",
     demoUrl: "https://desapp-frontend.onrender.com",
-    repoUrl: [], // TODO: agregar cuando esté público
+    repoUrl: [
+      { type: "frontend", url: "https://github.com/DesApp-2026c1-Grupo-3/frontend" },
+      { type: "backend", url: "https://github.com/DesApp-2026c1-Grupo-3/backend" },
+    ],
   },
   {
     id: "antisocial-net",

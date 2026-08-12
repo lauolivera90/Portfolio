@@ -4,6 +4,11 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-12 — Sesión: repos de Nexo (frontend + backend)
+
+### Changed
+- `shared/data/projects.js`: `nexo.repoUrl` pasa de `[]` (TODO) al array real con los repos del proyecto (en `en` y `es`): frontend `https://github.com/DesApp-2026c1-Grupo-3/frontend` y backend `https://github.com/DesApp-2026c1-Grupo-3/backend`. Con 2 items la card/modal muestran el `Dropdown` de repos etiquetado por `type`.
+
 ## 2026-08-12 — Sesión: CV por idioma en los botones de descarga (download forzado)
 
 ### Changed
