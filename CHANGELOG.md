@@ -4,6 +4,44 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: links de socials (LinkedIn/GitHub/Email) en pestaña nueva
+
+### Changed
+- Los links de `socials` (LinkedIn, GitHub, Email) abren en **pestaña nueva** (`target="_blank" rel="noopener noreferrer"`) en el `Footer` (IconButtons) y en la card "Direct contact" de `Contact` — ya no reemplazan la pestaña actual.
+
+## 2026-08-11 — Sesión: shared Toast + feedback de éxito del formulario
+
+### Added
+- `shared/ui/Toast/Toast.jsx` (barrel): notificación auto-dismissible. Portal a `document.body`, `fixed bottom-4 right-4 z-[80]`, `role="status"` + `aria-live="polite"`, icono opcional y X de cierre. **Auto-cierre** por `setTimeout(duration)` (default 5000, `onClose` vía ref para no reiniciar el timer en re-renders). **Barra de duración en vivo:** fill `bg-primary` que drena con la animación `toast-drain` (`@theme --animate-toast-drain` en `globals.css`, `width` 100%→0, `linear forwards`) con `animationDuration` inline; `motion-reduce:[animation:none]` en reduced-motion.
+- Copy del feedback en `sections.contact`: `sendAnother`, `toastTitle`, `toastBody`.
+
+### Changed
+- `useContactForm`: `submit` ahora devuelve `boolean` (éxito) y agrega `reset()` (fields/errors/serverError limpios, `status → idle`).
+- `ContactForm`: al enviar OK muestra el `Toast` (por el retorno de `submit`, sin effects) y la card "Message received" pasa a una fila con texto a la izquierda + botón **"Send another"** (`variant="ghost"`, icono lucide `Plus`) al end, que resetea el form.
+
+## 2026-08-11 — Sesión: formulario de contacto conectado a Formspree (features/contact-form)
+
+### Added
+- `features/contact-form/` (barrel `index.js`): `ContactForm` (UI del form: campos con validación inline + `aria-invalid`/`aria-describedby`, estados `idle`/`sending`/`sent`/`error`, banner de éxito), `useContactForm` (hook: estado, validación y submit real a Formspree), `validateEmail` (lib con JSDoc).
+- Copia del form en `sections.contact`: labels/placeholders de los campos, mensajes de validación (`nameRequired`/`emailRequired`/`emailInvalid`/`messageRequired`) y de error (`errorTitle`/`errorBody`).
+
+### Changed
+- `Contact` widget queda presentacional: renderiza `ContactForm` (desde la feature) + card "Direct contact" + botón CV. Se elimina el estado inline (fields/status) y el submit mock con `setTimeout`.
+- Submit real: `fetch(CONTACT_FORM_ENDPOINT)` de `shared/data/contact.js` con `FormData` del form (campos con `name`) y header `Accept: application/json`; manejo de fallos de Formspree (`data.errors[0].message`) y de red, dejando el form intacto para reintentar.
+
+### Removed
+- El `setTimeout` mock del formulario (pendiente del AGENTS: extraer `features/contact-form` — ahora cumplido).
+
+## 2026-08-11 — Sesión: endpoint Formspree del formulario de contacto
+
+### Added
+- `shared/data/contact.js` (barrel): `CONTACT_FORM_ENDPOINT = 'https://formspree.io/f/xrpzqvzv'` — endpoint público de Formspree para el formulario de contacto, guardado listo para cuando se extraiga `features/contact-form` (pendiente).
+
+## 2026-08-11 — Sesión: lista de tecnologías en 2 columnas en mobile
+
+### Changed
+- `TechStack`: en mobile, las listas con **más de 5 tecnologías** se dividen en 2 columnas (`grid grid-cols-2 gap-x-3 gap-y-2`) para reducir el alto; desde `sm:` vuelven a 1 columna. Las cards con ≤5 ítems (Database) quedan igual.
+
 ## 2026-08-11 — Sesión: autoplay del carousel + zoom de capturas (Lightbox)
 
 ### Added

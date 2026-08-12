@@ -6,6 +6,16 @@
   --color-primary: #004B87;
   --color-secondary: #4f4261;
   --color-accent: #8d6b9b;
+
+  --animate-toast-drain: toast-drain linear forwards;
+  @keyframes toast-drain {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0%;
+    }
+  }
 }
 
 body {

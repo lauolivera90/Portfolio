@@ -98,6 +98,7 @@ src/
       IconButton/
       Dropdown/           (menú desplegable compound — ver design.md)
       Lightbox/           (zoom de imagen por encima del modal — ver design.md)
+      Toast/              (notificación auto-dismissible con barra de duración — ver design.md)
       index.js
     hook/                 (useScrollReveal, useMediaQuery, etc.)
       useActiveSection.js   (sección visible con IntersectionObserver, banda central)
@@ -115,6 +116,7 @@ src/
       index.js            (barrel)
       profile.js          (identidad: nombre, rol, bio, hero, CV y socials con urls/iconos)
       sections.js         (copy de secciones: eyebrow/título/subtítulo por widget + nav/CTA)
+      contact.js          (endpoint Formspree del formulario de contacto — consumido por features/contact-form)
       projects.js         (proyectos: id, title, short/fullDescription, stack {frontend, backend, database, tools}, demoUrl, repoUrl, images[])
       techStack.js        (techs por categoría: { name, icon, onHero } — onHero decide presencia en el Hero)
       timeline.js

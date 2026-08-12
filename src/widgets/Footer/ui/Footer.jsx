@@ -8,7 +8,15 @@ export function Footer() {
         <p className="text-xs text-text/60">© 2026 {profile.name} {sections.footer.rights}</p>
         <div className="flex items-center gap-3">
           {socials.map(({ id, label, icon: Icon, url }) => (
-            <IconButton key={id} variant="ghost" size="md" href={url} aria-label={label}>
+            <IconButton
+              key={id}
+              variant="ghost"
+              size="md"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+            >
               <Icon color="currentColor" />
             </IconButton>
           ))}
