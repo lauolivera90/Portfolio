@@ -3,7 +3,7 @@ export function NavbarItem({ label, href, active, className = '', ...props }) {
     <a
       href={href}
       aria-current={active ? 'true' : undefined}
-      className={`text-sm font-medium transition-colors ${
+      className={`text-sm font-medium transition-colors rounded focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent focus-visible:ring-offset-background ${
         active ? 'text-text' : 'text-text/60 hover:text-text'
       } ${className}`}
       {...props}

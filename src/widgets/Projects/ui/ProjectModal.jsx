@@ -1,14 +1,19 @@
 import { useState } from 'react'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { projectImages } from '../../../shared/lib/index.js'
 import { Carousel, Lightbox, Modal, ModalBody, ModalFooter, ModalHeader, Tag } from '../../../shared/ui/index.js'
 import { ProjectActions } from './ProjectActions.jsx'
 
 const STACK_SECTIONS = [
-  { key: 'frontend', label: 'Frontend' },
-  { key: 'backend', label: 'Backend' },
-  { key: 'database', label: 'Database' },
-  { key: 'tools', label: 'Tools' },
+  { key: 'frontend' },
+  { key: 'backend' },
+  { key: 'database' },
+  { key: 'tools' },
 ]
+
+function screenshotAlt(template, name, n) {
+  return template.replace('{name}', name).replace('{n}', String(n))
+}
 
 function TechSection({ label, items }) {
   return (
@@ -24,13 +29,17 @@ function TechSection({ label, items }) {
 }
 
 export function ProjectModal({ project, onClose }) {
+  const { sections } = useLanguage()
   const [zoomIndex, setZoomIndex] = useState(null)
 
   if (!project) return null
 
+  const t = sections.projects
   const { carousel } = projectImages(project.id)
   const hasImages = carousel.length > 0
-  const sections = STACK_SECTIONS.filter((s) => (project.stack[s.key]?.length ?? 0) > 0)
+  const stackSections = STACK_SECTIONS.filter((s) => (project.stack[s.key]?.length ?? 0) > 0).map(
+    (s) => ({ ...s, label: t.stack[s.key] }),
+  )
   const total = carousel.length
 
   return (
@@ -43,7 +52,7 @@ export function ProjectModal({ project, onClose }) {
         <ModalBody>
           {hasImages && (
             <Carousel
-              ariaLabel="Project screenshots"
+              ariaLabel={t.screenshots}
               paused={zoomIndex !== null}
               onImageClick={setZoomIndex}
             >
@@ -51,7 +60,7 @@ export function ProjectModal({ project, onClose }) {
                 <img
                   key={src}
                   src={src}
-                  alt={`${project.title} screenshot ${i + 1}`}
+                  alt={screenshotAlt(t.screenshotAlt, project.title, i + 1)}
                   width="200"
                   height="300"
                   loading="lazy"
@@ -62,7 +71,7 @@ export function ProjectModal({ project, onClose }) {
 
           <p className="text-sm text-text/60 leading-relaxed">{project.fullDescription}</p>
 
-          {sections.map((s) => (
+          {stackSections.map((s) => (
             <TechSection key={s.key} label={s.label} items={project.stack[s.key]} />
           ))}
         </ModalBody>
@@ -76,7 +85,7 @@ export function ProjectModal({ project, onClose }) {
         <Lightbox
           open
           src={carousel[zoomIndex]}
-          alt={`${project.title} screenshot ${zoomIndex + 1}`}
+          alt={screenshotAlt(t.screenshotAlt, project.title, zoomIndex + 1)}
           onPrev={() => setZoomIndex((i) => (i - 1 + total) % total)}
           onNext={() => setZoomIndex((i) => (i + 1) % total)}
           onClose={() => setZoomIndex(null)}

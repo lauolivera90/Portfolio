@@ -1,16 +1,17 @@
 import { Download } from 'lucide-react'
-import { profile, cv, sections, techStack } from '../../../shared/data/index.js'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { iconColor } from '../../../shared/lib/index.js'
 import { Button, Container } from '../../../shared/ui/index.js'
 
-const heroIcons = Object.values(techStack).flat().filter((t) => t.onHero)
-
 export function Hero() {
+  const { profile, sections, techStack } = useLanguage()
+  const heroIcons = techStack.flatMap((group) => group.items).filter((t) => t.onHero)
+
   return (
     <section id="home" className="min-h-svh flex items-center pt-20">
       <Container className="py-16 w-full">
         <div className="max-w-2xl">
-          <h1 className="text-[clamp(2.5rem,7vw,3.75rem)] font-bold text-text leading-tight tracking-tight mb-4">
+          <h1 className="text-[clamp(2.25rem,5vw,3rem)] font-semibold text-text leading-tight tracking-tight mb-4">
             {profile.name}
           </h1>
           <p className="text-xl md:text-2xl font-medium text-text/80 mb-5">
@@ -24,8 +25,8 @@ export function Hero() {
             <Button variant="primary" href="#projects">
               {sections.hero.ctaProjects}
             </Button>
-            <Button variant="secondary" href={cv.url} icon={<Download />}>
-              {cv.label}
+            <Button variant="secondary" href={profile.cv.url} icon={<Download />}>
+              {profile.cv.label}
             </Button>
           </div>
 

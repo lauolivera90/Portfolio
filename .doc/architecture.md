@@ -37,6 +37,7 @@ src/
       ui/
         Navbar.jsx
         NavbarItem.jsx   (item del nav: subrayado primary si activo, border-text/10 si no)
+        SettingsMenu.jsx (botón de ajustes con Dropdown: idioma ES/EN + tema claro/oscuro)
       index.js            (barrel)
     Hero/
       ui/
@@ -79,10 +80,8 @@ src/
       lib/
         validateEmail.js
       index.js
-    theme-toggle/          (opcional, si hay switch claro/oscuro)
-      hook/
-        useThemeToggle.js
-      index.js
+    theme-toggle/          (implementado vía shared/hook/useTheme.js + widgets/Navbar/SettingsMenu
+                             — no requiere una feature propia; el toggle solo cambia data-theme en <html>)
 
   entities/
     (vacío en este proyecto — no hay conceptos de negocio con estado propio
@@ -100,17 +99,27 @@ src/
       Lightbox/           (zoom de imagen por encima del modal — ver design.md)
       Toast/              (notificación auto-dismissible con barra de duración — ver design.md)
       index.js
-    hook/                 (useScrollReveal, useMediaQuery, etc.)
+    hook/
       useActiveSection.js   (sección visible con IntersectionObserver, banda central)
-      useCarouselPause.js   (pausa del autoplay del Carousel: hover, focus, reduced-motion, fuera de vista)
+      useCarousel.js        (índice del Carousel, wrap-around, autoplay con setInterval)
+      useCarouselPause.js   (pausa del autoplay: hover, focus, reduced-motion, fuera de vista)
       useDropdown.js        (estado y cierre del Dropdown: click fuera + Escape + scroll)
       useDropdownPlacement.js (posición automática del menú: coords fijos por getBoundingClientRect, autoflip vertical + alineación al borde)
+      useEscapeClose.js      (cierra on Escape mientras enabled — menú móvil del Navbar)
       useHideOnScroll.js    (ocultar al bajar con threshold, mostrar al subir)
+      useLines.js           (medición de líneas por ResizeObserver para clamp dinámico)
+      useModalBehavior.js   (foco al diálogo, trap de Tab, scroll lock, restore de foco; prop suspended)
       useNavbarVisibility.js (composición: scroll hide + hover reveal + menú abierto)
-      useScrollReveal.js
+      useTheme.js           (tema claro/oscuro: data-theme en <html>, localStorage + prefers-color-scheme)
       index.js
-    lib/                  (helpers puros sin JSX: formatDate, cn, etc.)
-      cn.js
+    lib/                  (helpers puros sin JSX)
+      iconColor.js        (color para iconos lucide vs Simple Icons)
+      projectImages.js    (resolución de screenshots por convención de carpetas — ver §3)
+      index.js
+    i18n/                 (idioma ES/EN — estado cross-cutting a nivel app)
+      context.js          (LanguageContext)
+      LanguageProvider.jsx (inicialización, persistencia, SEO dinámico presentados en App para todo el árbol)
+      useLanguage.js      (hook que devuelve bundles por-locale resueltos)
       index.js
     data/                 (contenido estático del portafolio — la fuente única de contenido)
       index.js            (barrel)

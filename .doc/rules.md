@@ -39,7 +39,7 @@ Se mantiene igual que en Uloom, sin excepciones por tamaño de proyecto:
 
 ## 3. Estructura de carpetas (FSD)
 
-La estructura de carpetas la define `architecture.md` (Feature-Sliced Design acotado para una landing): `app/` (configuración, estilos globales), `widgets/` (bloques de UI por sección: Navbar, Hero, About, Projects, TechStack, Timeline, Contact, Footer), `features/` (contact-form, theme-toggle opcional) y `shared/` (primitivas UI, hooks, helpers y datos estáticos).
+La estructura de carpetas la define `architecture.md` (Feature-Sliced Design acotado para una landing): `app/` (configuración, estilos globales), `widgets/` (bloques de UI por sección: Navbar, Hero, About, Projects, TechStack, Timeline, Contact, Footer), `features/` (contact-form) y `shared/` (primitivas UI, hooks, helpers, datos estáticos e i18n). El toggle de tema claro/oscuro no es una feature propia: vive en `shared/hook/useTheme.js` + el `SettingsMenu` del Navbar (solo cambia `data-theme` en `<html>`).
 
 Los detalles completos — dónde va cada cosa y qué capas quedan vacías o simplificadas en este proyecto — están en `architecture.md` secciones 2 y 4. No inventar una estructura paralela: si una decisión de carpetas no está documentada, preguntar antes de asumir.
 

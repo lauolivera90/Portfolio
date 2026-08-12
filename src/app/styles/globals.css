@@ -4,6 +4,7 @@
   --color-text: #eff2f4;
   --color-background: #07090b;
   --color-primary: #004B87;
+  --color-on-primary: #eff2f4;
   --color-secondary: #4f4261;
   --color-accent: #a58fc2;
 
@@ -16,6 +17,21 @@
       width: 0%;
     }
   }
+}
+
+:root {
+  color-scheme: dark;
+}
+
+/* Tema claro: solo flipan los tokens; primary/on-primary se mantienen
+   (navy oscuro + texto claro, contraste AA en ambos temas). Fondo off-white
+   #f5f6f8 a juego con la suavidad del #07090b del tema oscuro. */
+:root[data-theme="light"] {
+  --color-text: #171a1f;
+  --color-background: #f5f6f8;
+  --color-secondary: #6b5b84;
+  --color-accent: #6d4d8f;
+  color-scheme: light;
 }
 
 body {

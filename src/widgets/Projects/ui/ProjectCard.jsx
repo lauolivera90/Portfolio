@@ -1,11 +1,13 @@
 import { useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { useLines } from '../../../shared/hook/index.js'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { projectImages } from '../../../shared/lib/index.js'
 import { Button, Card, CardBody, CardFooter, Tag } from '../../../shared/ui/index.js'
 import { ProjectActions } from './ProjectActions.jsx'
 
 export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
+  const { sections } = useLanguage()
   const [descRef, lines] = useLines()
   const tags = [
     ...project.stack.frontend.slice(0, 2),
@@ -34,7 +36,7 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
 
       <CardFooter className="flex-1">
         <div className="flex flex-col gap-4 h-full">
-          <h3 className="text-base font-semibold text-text leading-snug">{project.title}</h3>
+          <h3 className="text-lg font-medium text-text leading-snug">{project.title}</h3>
           <p
             ref={descRef}
             style={
@@ -65,7 +67,7 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
 
             <Button variant="ghost" onClick={onVerMas}>
               <span className="inline-flex items-center gap-2">
-                View more
+                {sections.projects.viewMore}
                 <ArrowRight aria-hidden="true" size={16} />
               </span>
             </Button>

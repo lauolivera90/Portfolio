@@ -1,10 +1,11 @@
 import { useCallback, useRef, useState } from 'react'
-import { projects, sections } from '../../../shared/data/index.js'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { Container, SectionLabel } from '../../../shared/ui/index.js'
 import { ProjectCard } from './ProjectCard.jsx'
 import { ProjectModal } from './ProjectModal.jsx'
 
 export function Projects() {
+  const { projects, sections } = useLanguage()
   const [activeProject, setActiveProject] = useState(null)
   const [maxLines, setMaxLines] = useState(0)
   const linesRef = useRef({})
@@ -18,7 +19,7 @@ export function Projects() {
     <section id="projects" className="py-24 border-t border-text/10 bg-text/5">
       <Container>
         <SectionLabel>{sections.projects.eyebrow}</SectionLabel>
-        <h2 className="text-3xl font-bold text-text mb-3">{sections.projects.title}</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-text mb-3">{sections.projects.title}</h2>
         <p className="text-text/60 text-sm mb-12 max-w-xl">
           {sections.projects.subtitle}
         </p>

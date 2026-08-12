@@ -1,4 +1,4 @@
-export const projects = [
+const en = [
   {
     id: "nexo",
     title: "Nexo — Academic Planning Platform",
@@ -57,3 +57,65 @@ export const projects = [
     repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/uloom" }], // TODO: confirmar URL exacta del repo
   }
 ]
+
+const es = [
+  {
+    id: "nexo",
+    title: "Nexo — Plataforma de planificación académica",
+    shortDescription:
+      "Una plataforma para ayudar a estudiantes universitarios a planificar su recorrido académico y evitar atrasarse. Construida con un equipo de 5 personas usando Scrum.",
+    fullDescription:
+      "Nexo ayuda a estudiantes universitarios a registrar su avance académico y planificar su recorrido a lo largo de la carrera. Muestra el historial de materias y estadísticas, e incluye un asistente de planificación que proyecta los futuros semestres en base a las materias aprobadas, los próximos exámenes y las limitaciones de tiempo del propio estudiante. Un módulo social permite compartir avances, materiales de estudio y unirse a grupos de estudio.\n\nConstruida en colaboración con un equipo de 5 personas siguiendo Scrum, coordinando los sprints con Trello. Empecé proponiendo el diseño de la base de datos (modelo ER) y construyendo los endpoints CRUD principales del backend, y desde el segundo sprint pasé a trabajar también en el frontend — eventualmente trabajando en ambos. Construí el módulo de planificación académica, la vista del historial académico y la visualización del plan de estudio, y más tarde trabajé en el rediseño del sitio y su layout responsivo.\n\nLa parte más desafiante fue el asistente de planificación: necesitaba proyectar el calendario de materias de un estudiante respetando las cadenas de correlatividades, que podían formar dependencias circulares entre materias. Lo modelé como un grafo y escribí un algoritmo recursivo para resolverlo — el primer algoritmo de este tipo que escribía desde cero.\n\nEl proyecto también me exigió aprender a trabajar con agentes de IA de programación (OpenCode) a mitad del desarrollo — algo que no estaba cubierto en mi formación técnica — junto con adaptarme por primera vez a un flujo de trabajo Scrum real.",
+    stack: {
+      frontend: ["TypeScript", "React", "Vite", "Tailwind CSS"],
+      backend: ["Node.js", "Express", "Sequelize", "JWT", "Nodemailer"],
+      database: ["PostgreSQL"],
+      tools: ["Docker", "OpenCode"],
+    },
+    status: "finished",
+    demoType: "deployment",
+    demoUrl: "https://desapp-frontend.onrender.com",
+    repoUrl: [], // TODO: agregar cuando esté público
+  },
+  {
+    id: "antisocial-net",
+    title: "Antisocial Net — Aplicación web full stack",
+    shortDescription:
+      "Una red social inspirada en Twitter, construida como mi primer proyecto full stack entre dos materias de la universidad.",
+    fullDescription:
+      "Antisocial Net es una red social inspirada en el diseño de Twitter, construida al principio de mis estudios para aprender desarrollo full stack en la práctica. El backend se desarrolló para una materia y el frontend para otra en paralelo, así que trabajé en ambos desde el principio.\n\nTrabajé en la arquitectura del backend, incluyendo el diseño de la base de datos (modelo ER) y la construcción de los endpoints de la API, y también contribuí al diseño del frontend y a algunas de sus funcionalidades. Los equipos de backend y frontend se superponían parcialmente — mantuve a un compañero en ambos.\n\nEsta fue mi primera vez trabajando en un proyecto en equipo, lo cual fue en sí mismo uno de los mayores desafíos al principio. En lo técnico, diseñar el modelo de base de datos antes de construir los endpoints fue lo que más esfuerzo requirió, y consumir una API desde el frontend por primera vez implicó resolver problemas nuevos en el camino. Desplegué yo mismo tanto el frontend (Vercel) como el backend (Render).",
+    stack: {
+      frontend: ["JavaScript", "React", "Vite", "Bootstrap"],
+      backend: ["Node.js", "Express", "Swagger UI"],
+      database: ["MongoDB"],
+      tools: ["Docker"],
+    },
+    status: "finished",
+    demoType: "deployment",
+    demoUrl: "https://anti-social-net.vercel.app/",
+    repoUrl: [
+      { type: "frontend", url: "https://github.com/lauolivera90/anti-social-net" },
+      { type: "backend", url: "https://github.com/lauolivera90/backend-antisocialnet" },
+    ],
+  },
+  {
+    id: "uloom",
+    title: "Uloom — Lanzador de sesiones de escritorio",
+    shortDescription:
+      "Una app de escritorio para iniciar entornos completos de trabajo/estudio — apps y pestañas del navegador — con un clic. Proyecto en solitario, actualmente en desarrollo.",
+    fullDescription:
+      "Uloom resuelve un problema pequeño pero repetitivo: preparar el entorno antes de una sesión de trabajo o estudio — abrir las pestañas del navegador, las herramientas y las apps de siempre. Con Uloom creás una \"sesión\" (ej. \"Estudio de inglés\") una sola vez, y al iniciarla se abren todas las cosas que normalmente configurarías a mano — traductores, PDFs, una plataforma de estudio, etc. La automatización de pestañas ya funciona; el lanzamiento de apps externas es lo próximo a implementar.\n\nEs un proyecto en solitario — me encargo de la documentación, el diseño y el desarrollo de punta a punta, incluyendo un conjunto escrito de pautas de arquitectura y estilo de código que sigo a lo largo del proyecto.\n\nTécnicamente, es una app de escritorio con Electron: un frontend React + Vite (el proceso renderer) y el proceso principal de Electron manejando todo a nivel del sistema operativo, comunicándose vía IPC — sin backend ni base de datos tradicionales, con la configuración persistida en archivos JSON locales. Construir esto fue mi primera vez trabajando con la arquitectura de una app de escritorio: entender cómo el frontend se comunica con el sistema operativo y escribir los scripts que detectan los navegadores instalados y abren pestañas en ellos fueron problemas nuevos que tuve que resolver desde cero.\n\nUloom está actualmente en desarrollo (v0.4.3), rumbo a su primer release público.",
+    stack: {
+      frontend: ["React", "Vite", "Tailwind CSS", "React Router"],
+      backend: ["Electron"],
+      database: [], // persistencia en archivos JSON locales, no hay DB
+      tools: ["Electron Forge", "ESLint", "OpenCode", "Figma", "Stitch"],
+    },
+    status: "in-development",
+    demoType: "deployment", // "video" cuando exista una grabación; "download" cuando haya release
+    demoUrl: null,
+    repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/uloom" }], // TODO: confirmar URL exacta del repo
+  }
+]
+
+export const projects = { en, es }

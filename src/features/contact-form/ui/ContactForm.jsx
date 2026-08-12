@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Check, Plus, Send } from 'lucide-react'
-import { sections } from '../../../shared/data/index.js'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { Button, Toast } from '../../../shared/ui/index.js'
 import { useContactForm } from '../hook/useContactForm.js'
 
@@ -50,6 +50,7 @@ function Field({ id, label, placeholder, value, onChange, error, multiline = fal
 }
 
 export function ContactForm() {
+  const { sections } = useLanguage()
   const c = sections.contact
   const { fields, errors, status, serverError, updateField, submit, reset } = useContactForm()
   const [toastVisible, setToastVisible] = useState(false)

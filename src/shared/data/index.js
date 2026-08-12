@@ -1,5 +1,6 @@
-export { profile, cv, socials } from './profile.js'
+export { profile, socials } from './profile.js'
 export { sections, nav } from './sections.js'
+export { seo } from './seo.js'
 export { CONTACT_FORM_ENDPOINT } from './contact.js'
 export { projects } from './projects.js'
 export { techStack } from './techStack.js'

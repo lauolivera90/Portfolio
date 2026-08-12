@@ -1,14 +1,16 @@
 import { ChevronDown, Clock, ExternalLink, Play } from 'lucide-react'
 import { SiGithub } from '@icons-pack/react-simple-icons'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { Button, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from '../../../shared/ui/index.js'
 
-const REPO_LABELS = { frontend: 'Frontend', backend: 'Backend' }
-
 function DemoButton({ status, demoType, demoUrl }) {
+  const { sections } = useLanguage()
+  const t = sections.projects
+
   if (status === 'in-development') {
     return (
       <Button variant="secondary" className="flex-1" disabled icon={<Clock />}>
-        In development
+        {t.inDevelopment}
       </Button>
     )
   }
@@ -23,7 +25,7 @@ function DemoButton({ status, demoType, demoUrl }) {
         rel="noopener noreferrer"
         icon={<Play />}
       >
-        Watch
+        {t.watch}
       </Button>
     )
   }
@@ -37,12 +39,16 @@ function DemoButton({ status, demoType, demoUrl }) {
       rel="noopener noreferrer"
       icon={<ExternalLink />}
     >
-      Live demo
+      {t.liveDemo}
     </Button>
   )
 }
 
 function RepoButton({ repoUrl }) {
+  const { sections } = useLanguage()
+  const t = sections.projects
+  const repoLabels = { frontend: t.repoFrontend, backend: t.repoBackend }
+
   if (!repoUrl?.length) return null
 
   if (repoUrl.length === 1) {
@@ -54,7 +60,7 @@ function RepoButton({ repoUrl }) {
         rel="noopener noreferrer"
         icon={<SiGithub color="currentColor" />}
       >
-        Repo
+        {t.repo}
       </Button>
     )
   }
@@ -64,7 +70,7 @@ function RepoButton({ repoUrl }) {
       <DropdownTrigger>
         <Button variant="secondary" icon={<SiGithub color="currentColor" />}>
           <span className="inline-flex items-center gap-1">
-            Repo
+            {t.repo}
             <ChevronDown aria-hidden="true" size={16} />
           </span>
         </Button>
@@ -72,7 +78,7 @@ function RepoButton({ repoUrl }) {
       <DropdownMenu>
         {repoUrl.map(({ type, url }) => (
           <DropdownItem key={url} href={url} icon={<SiGithub color="currentColor" />}>
-            {REPO_LABELS[type] ?? type}
+            {repoLabels[type] ?? type}
           </DropdownItem>
         ))}
       </DropdownMenu>

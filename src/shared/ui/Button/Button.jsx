@@ -1,6 +1,6 @@
 export function Button({ variant = 'primary', icon, className = '', children, href, ...props }) {
   const variants = {
-    primary: 'bg-primary hover:brightness-110 text-text',
+    primary: 'bg-primary hover:brightness-110 text-on-primary',
     secondary: 'border border-text/10 hover:border-primary/50 text-text',
     ghost: 'text-text/60 hover:bg-text/5 hover:text-text',
   }

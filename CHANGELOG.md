@@ -4,6 +4,60 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-12 — Sesión: pulido tema claro + iconos sociales con color de marca
+
+### Added
+- `socials[].color` en `shared/data/profile.js`: color oficial de cada marca — LinkedIn `#0A66C2`, Gmail `#EA4335`, GitHub `currentColor` (su marca `#181717` es negra, no se vería en el tema oscuro).
+- Email pasa de lucide `Mail` a **`SiGmail`** (Simple Icons, disponible en el paquete).
+
+### Changed
+- `globals.css`: fondo del tema claro pasa de `#ffffff` a **off-white `#f5f6f8`** (a juego con el `#07090b` del oscuro, menos brillante; todos los contraste AA siguen: text ~16:1, accent ~6:1, primary+on-primary ~7:1). `useTheme.js`: el `theme-color` claro ahora es `#f5f6f8`.
+- `shared/ui/BrandIcon.jsx`: `IconLinkedin` acepta prop `color` (default `currentColor`, `fill` dinámico) — antes estaba fijo.
+- Footer (`IconButton`) y la card "Direct contact" de Contact renderizan `<Icon color={social.color} />` (antes forzaban `currentColor`): LinkedIn azul y Gmail rojo se ven con su marca en ambos temas; GitHub sigue monocromo con su hover de color.
+
+### Docs
+- `.doc/design.md`: valor del `background` claro (`#f5f6f8`) y nota de iconos sociales con color de marca en la sección Iconos; ajuste de la nota de contraste §5.
+- `AGENTS.md`: bala de tema con el off-white + nueva bala "Iconos sociales".
+- `CHANGELOG.md`: esta entrada.
+
+## 2026-08-12 — Sesión: menú de Ajustes (idioma + tema claro/oscuro) en la Navbar
+
+### Added
+- `shared/hook/useTheme.js` (barrel `shared/hook`): tema `'dark'`/`'light'` con init `localStorage['portfolio-theme']` → `prefers-color-scheme`. Al cambiar setea `data-theme` en `<html>`, persiste y actualiza `meta[name="theme-color"]`.
+- Script inline en `index.html` (head): setea `data-theme` antes del primer paint (evita flash al recargar).
+- Primitiva `DropdownButton` en `shared/ui/Dropdown` (exportada por barrel): item accionable no-link (`li > button`, mismo estilo que `DropdownItem`, props `role`/`aria-checked`/`icon`/`onClick`, cierra el menú tras el click).
+- `widgets/Navbar/ui/SettingsMenu.jsx`: botón de ajustes con `Dropdown`. Trigger: `IconButton` lucide `Settings` (desktop) o fila full-width "Ajustes" (`variant="row"`: Settings + label + ChevronDown, para el menú móvil). Menú: grupo **idioma** (Español/English, `DropdownButton` `menuitemradio` + `aria-checked`, lucide `Languages`, Check `text-primary` en el activo, `onDone` al elegir) + `li role="separator"` + **tema** (`DropdownButton` `menuitemcheckbox`, lucide `Sun`/`Moon` según el estado, label "Modo claro"/"Modo oscuro" con `toggleTheme`).
+- Token `--color-on-primary` en `globals.css` (`#eff2f4`): texto/ícono sobre `bg-primary` — garantiza AA de los CTAs en ambos temas.
+
+### Changed
+- `Navbar`: se elimina `LanguageSwitcher` (componente y archivo). Desktop: `SettingsMenu` envuelto en `hidden md:flex` junto al CTA. Mobile: fila "Ajustes" (`SettingsMenu variant="row"` + `wrapperClassName="w-full"`) al final del menú hamburguesa separada con `border-t`, cerrando el menú al elegir idioma (`onDone`).
+- `globals.css`: tema claro vía `:root[data-theme="light"]` (solo flipan `text #171a1f` / `background #ffffff` / `secondary #6b5b84` / `accent #6d4d8f` + `color-scheme: light`; `:root` por defecto `color-scheme: dark`). `primary`/`on-primary` se mantienen igual en ambos temas.
+- `Button` y `IconButton` (variante primary) pasan de `text-text` a `text-on-primary`; mismo cambio en el box de iniciales del Navbar (el texto era `text-text`, que en tema claro fallaba contraste sobre el navy).
+- Labels nuevos en `sections.navbar` (en/es): `settings`, `language`, `darkMode`, `lightMode`; se elimina `switchLanguage`.
+
+### Docs
+- `AGENTS.md`: bala de idioma apuntando al `SettingsMenu` + nueva bala "Tema claro/oscuro" (useTheme, token `--on-primary`, script inline, `DropdownButton`).
+- `.doc/architecture.md`: `SettingsMenu.jsx` en Navbar, `useTheme.js` en `shared/hook`, `shared/i18n/` documentado por primera vez; actualizada la nota de `features/theme-toggle`.
+- `.doc/design.md`: tokens con `--on-primary` + overlays de tema claro, variantes primary con `text-on-primary`, `DropdownButton` en la primitiva Dropdown y uso en SettingsMenu, nota de contraste del tema claro en §5.
+- `.doc/rules.md`: §3 actualizado (toggle de tema no es feature propia).
+- `CHANGELOG.md`: esta entrada.
+
+## 2026-08-12 — Sesión: switcher de idioma ES/EN (i18n custom)
+
+### Added
+- `shared/i18n/` (barrel `index.js`): `context.js` (crea `LanguageContext`), `LanguageProvider.jsx` (provider que envuelve `MainLayout` en `App.jsx`) y `useLanguage.js` (hook consumidor). Inicialización: `localStorage['portfolio-lang']` → si no existe, `navigator.language` empezando con `es` → español, sino inglés. `setLang` persiste en localStorage y el effect sincroniza `document.documentElement.lang`, `document.title` y las metas `description`/`og:title`/`og:description` (SEO dinámico por idioma).
+- `shared/data/seo.js` (barrel): title/description por-locale para el SSR de `index.html`/Open Graph.
+- `widgets/Navbar/ui/LanguageSwitcher.jsx`: toggle ES/EN (grupo de botones `aria-pressed` + `aria-label` traducido) montado en la Navbar junto al CTA.
+
+### Changed
+- `shared/data` pasa a bundles por-locale `{ en, es }`: `sections.js` (copy completo + labels nuevos de proyectos/modal/navbar por idioma), `profile.js` (`profile` con invariantes `name`/`initials`/`socials` + `en`/`es` con `role`/`heroBio`/`aboutBio`/`cv`), `projects.js` (títulos y descripciones en español), `timeline.js` (labels/notes y meses en español). `nav` pasa de links-string a **`{ id, label }`** — los hrefs (`#home`, etc.) se generan desde `id`, desacoplando URL de texto traducible.
+- `techStack.js`: de objeto `{Categoría: items[]}` a **array de grupos** `[{ key, items }]` (techs universales, sin traducir); las etiquetas de categoría viven en `sections.techStack.categories[lang]` ("Database"→"Base de datos", "Tools"→"Herramientas"). El Hero derive `techStack.flatMap(g => g.items).filter(onHero)`.
+- Widgets (Navbar, Hero, About, Projects, ProjectCard, ProjectActions, ProjectModal, TechStack, Timeline, Contact, Footer) y `ContactForm` consumen la data vía `useLanguage()` (re-render al cambiar idioma). Strings hardcodeados externalizados: "View more", "In development", "Watch", "Live demo", "Repo" + labels del dropdown, categorías del modal, aria-labels del nav ("Principal"/"Navegación móvil"/"Alternar menú") y plantilla de alt de screenshots `{name} screenshot {n}` / `Captura {n} de {name}`.
+- Copy completo en español preparado (hero, bio de 3 párrafos, proyectos Nexo/Antisocial Net/Uloom, formulario con voseo, timeline).
+
+### Docs
+- `AGENTS.md`: reemplazada la bala "Idioma: todo el sitio en inglés" por la descripción del sistema ES/EN (arquitectura de `shared/i18n`, shape por-locale de la data, inicialización y la excepción del hook `useLanguage` fuera de `shared/hook`).
+
 ## 2026-08-11 — Sesión: sistema de carpetas de screenshots (img0 miniatura / img1+ carousel)
 
 ### Added

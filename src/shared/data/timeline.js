@@ -1,4 +1,4 @@
-export const timeline = [
+const en = [
   {
     month: 'Jul',
     year: '2022',
@@ -35,4 +35,45 @@ export const timeline = [
     label: 'Uloom',
     note: 'Solo project, in development — today',
   },
-];
+]
+
+const es = [
+  {
+    month: 'jul',
+    year: '2022',
+    label: 'Técnico en Programación',
+    note: 'Universidad Nacional de Hurlingham (UNAHUR)',
+  },
+  {
+    month: 'nov',
+    year: '2024',
+    label: 'Certificación PostgreSQL',
+    note: 'CDAC / CEIT — UNAHUR',
+  },
+  {
+    month: 'jul',
+    year: '2025',
+    label: 'Antisocial Net',
+    note: 'Primer proyecto full stack',
+  },
+  {
+    month: 'abr–jul',
+    year: '2026',
+    label: 'Nexo',
+    note: 'Proyecto integrador — equipo de 5',
+  },
+  {
+    month: 'jul',
+    year: '2026',
+    label: 'Graduado + Lic. en Ciencias de la Computación',
+    note: 'Continuando estudios en UNAHUR',
+  },
+  {
+    month: 'ago',
+    year: '2026',
+    label: 'Uloom',
+    note: 'Proyecto en solitario, en desarrollo — hoy',
+  },
+]
+
+export const timeline = { en, es }

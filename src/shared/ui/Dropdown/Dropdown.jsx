@@ -63,3 +63,28 @@ export function DropdownItem({ href, icon, className = '', children }) {
     </li>
   )
 }
+
+export function DropdownButton({ icon, className = '', children, onClick, ...rest }) {
+  const { close } = useContext(DropdownContext)
+
+  return (
+    <li role="none">
+      <button
+        type="button"
+        onClick={(event) => {
+          onClick?.(event)
+          close()
+        }}
+        className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-text/80 hover:bg-text/5 hover:text-text rounded-md transition-colors text-left ${className}`}
+        {...rest}
+      >
+        {icon && (
+          <span aria-hidden="true" className="[&>svg]:h-4 [&>svg]:w-4">
+            {icon}
+          </span>
+        )}
+        <span className="flex-1">{children}</span>
+      </button>
+    </li>
+  )
+}

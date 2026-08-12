@@ -1,12 +1,14 @@
-import { sections, timeline } from '../../../shared/data/index.js'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { Container, SectionLabel } from '../../../shared/ui/index.js'
 
 export function Timeline() {
+  const { sections, timeline } = useLanguage()
+
   return (
     <section id="timeline" className="py-24 border-t border-text/10 bg-text/5">
       <Container>
         <SectionLabel>{sections.timeline.eyebrow}</SectionLabel>
-        <h2 className="text-3xl font-bold text-text mb-16">{sections.timeline.title}</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-text mb-16">{sections.timeline.title}</h2>
 
         <div className="flex flex-col gap-0">
           {timeline.map((item, i) => (

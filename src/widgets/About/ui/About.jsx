@@ -1,13 +1,15 @@
-import { profile, sections } from '../../../shared/data/index.js'
+import { useLanguage } from '../../../shared/i18n/index.js'
 import { Container, SectionLabel } from '../../../shared/ui/index.js'
 import heroPhoto from '../../../shared/assets/images/profile/hero.png'
 
 export function About() {
+  const { profile, sections } = useLanguage()
+
   return (
     <section id="about" className="py-24 border-t border-text/10">
       <Container>
         <SectionLabel>{sections.about.eyebrow}</SectionLabel>
-        <h2 className="text-3xl font-bold text-text mb-12">{sections.about.title}</h2>
+        <h2 className="text-2xl md:text-3xl font-semibold text-text mb-12">{sections.about.title}</h2>
 
         <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12 items-start">
           <div className="flex-shrink-0">
