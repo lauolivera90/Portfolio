@@ -5,7 +5,7 @@
   --color-background: #07090b;
   --color-primary: #004B87;
   --color-secondary: #4f4261;
-  --color-accent: #8d6b9b;
+  --color-accent: #a58fc2;
 
   --animate-toast-drain: toast-drain linear forwards;
   @keyframes toast-drain {

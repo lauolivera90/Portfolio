@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react'
 import { projects, sections } from '../../../shared/data/index.js'
-import { Container } from '../../../shared/ui/index.js'
+import { Container, SectionLabel } from '../../../shared/ui/index.js'
 import { ProjectCard } from './ProjectCard.jsx'
 import { ProjectModal } from './ProjectModal.jsx'
 
@@ -17,10 +17,7 @@ export function Projects() {
   return (
     <section id="projects" className="py-24 border-t border-text/10 bg-text/5">
       <Container>
-        <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
-          <span className="w-4 h-px bg-accent" />
-          {sections.projects.eyebrow}
-        </p>
+        <SectionLabel>{sections.projects.eyebrow}</SectionLabel>
         <h2 className="text-3xl font-bold text-text mb-3">{sections.projects.title}</h2>
         <p className="text-text/60 text-sm mb-12 max-w-xl">
           {sections.projects.subtitle}

@@ -18,7 +18,7 @@ export const timeline = [
     note: 'First full-stack project',
   },
   {
-    month: 'Abr–Jul',
+    month: 'Apr–Jul',
     year: '2026',
     label: 'Nexo',
     note: 'Graduation project — team of 5',

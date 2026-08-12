@@ -43,5 +43,5 @@ export const sections = {
 
 export const nav = {
   links: ['Home', 'About', 'Projects', 'Timeline'],
-  cta: { label: 'Contactar', href: '#contact' },
+  cta: { label: 'Contact', href: '#contact' },
 }

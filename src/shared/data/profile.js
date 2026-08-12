@@ -17,10 +17,10 @@ export const profile = {
   ],
 }
 
-export const cv = { label: 'Download CV', url: '#' }
+export const cv = { label: 'Download CV', url: '/cv.pdf' }
 
 export const socials = [
-  { id: 'github', label: 'GitHub', icon: SiGithub, handle: 'Github', url: 'https://github.com/lauolivera90' },
-  { id: 'linkedin', label: 'LinkedIn', icon: IconLinkedin, handle: 'Linkedin', url: 'https://linkedin.com/in/lautaro-olivera-121480326' },
-  { id: 'email', label: 'Email', icon: Mail, handle: 'Email', url: 'mailto:lautarobolivera098@gmail.com' },
+  { id: 'github', label: 'GitHub', icon: SiGithub, handle: 'github.com/lauolivera90', url: 'https://github.com/lauolivera90' },
+  { id: 'linkedin', label: 'LinkedIn', icon: IconLinkedin, handle: 'linkedin.com/in/lautaro-olivera-121480326', url: 'https://linkedin.com/in/lautaro-olivera-121480326' },
+  { id: 'email', label: 'Email', icon: Mail, handle: 'lautarobolivera098@gmail.com', url: 'mailto:lautarobolivera098@gmail.com' },
 ]

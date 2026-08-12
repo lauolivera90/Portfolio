@@ -16,7 +16,6 @@ export const projects = [
     demoType: "deployment",
     demoUrl: "https://desapp-frontend.onrender.com",
     repoUrl: [], // TODO: agregar cuando esté público
-    images: [],
   },
   {
     id: "antisocial-net",
@@ -38,7 +37,6 @@ export const projects = [
       { type: "frontend", url: "https://github.com/lauolivera90/anti-social-net" },
       { type: "backend", url: "https://github.com/lauolivera90/backend-antisocialnet" },
     ],
-    images: [],
   },
   {
     id: "uloom",
@@ -57,6 +55,5 @@ export const projects = [
     demoType: "deployment", // "video" cuando exista una grabación; "download" cuando haya release
     demoUrl: null,
     repoUrl: [{ type: "frontend", url: "https://github.com/lauolivera90/uloom" }], // TODO: confirmar URL exacta del repo
-    images: [],
   }
 ]

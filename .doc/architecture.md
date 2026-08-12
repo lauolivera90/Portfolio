@@ -117,7 +117,7 @@ src/
       profile.js          (identidad: nombre, rol, bio, hero, CV y socials con urls/iconos)
       sections.js         (copy de secciones: eyebrow/título/subtítulo por widget + nav/CTA)
       contact.js          (endpoint Formspree del formulario de contacto — consumido por features/contact-form)
-      projects.js         (proyectos: id, title, short/fullDescription, stack {frontend, backend, database, tools}, demoUrl, repoUrl, images[])
+      projects.js         (proyectos: id, title, short/fullDescription, stack {frontend, backend, database, tools}, demoUrl (array {type,url}) — sin campo de imágenes: las resuelve la convención de carpetas + `shared/lib/projectImages.js`)
       techStack.js        (techs por categoría: { name, icon, onHero } — onHero decide presencia en el Hero)
       timeline.js
     assets/
@@ -147,12 +147,28 @@ Hay dos ubicaciones válidas según el tipo de imagen — no es indistinto:
   ```
   shared/assets/images/
     profile/
-      avatar.webp
+      hero.webp
     projects/
-      proyecto-1-cover.webp
-      proyecto-1-detail.webp
-      proyecto-2-cover.webp
+      <project-id>/        (carpeta = project.id, ej. "nexo", "antisocial-net", "uloom")
+        img0.webp          (miniatura de la card — NUNCA en el carousel)
+        img1.webp          (capturas del carousel/lightbox del modal)
+        img2.webp
+        ...
   ```
+  **Convención de screenshots:** carpeta = `project.id`. `img0` es siempre la miniatura de la card; `img1+` son las capturas del carousel del modal (img0 queda excluida). Se resuelven con `shared/lib/projectImages.js` — usa `import.meta.glob` (eager) sobre `projects/*/img*`, devuelve `{ cover, carousel }` ordenado numéricamente (`img10` después que `img9`). Con cero archivos no rompe el build: `cover` es `null` (la card usa fallback picsum) y `carousel` queda `[]` (el modal oculta el carousel). Formato recomendado: `.webp` (el glob también tolera png/jpg/jpeg). `String` de ejemplo:
+  ```js
+  // shared/lib/projectImages.js
+  const imageModules = import.meta.glob('/src/shared/assets/images/projects/*/img*.{webp,png,jpg,jpeg}', { eager: true, import: 'default' })
+  export function projectImages(projectId) {
+    const base = `/src/shared/assets/images/projects/${projectId}/`
+    const urls = Object.keys(imageModules)
+      .filter((key) => key.startsWith(base))
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+      .map((key) => imageModules[key])
+    return { cover: urls[0] ?? null, carousel: urls.slice(1) }
+  }
+  ```
+  Los widgets lo consumen así: `ProjectCard` usa `cover`, `ProjectModal` usa `carousel`.
 
 - **`public/`** → archivos que se referencian por URL directa y no necesitan procesamiento: `favicon.ico`, `og-image.png` (Open Graph, se referencia por URL absoluta en meta tags), el PDF del CV. Todo lo que esté acá se sirve tal cual, sin hash ni optimización — por eso solo van archivos que no se benefician de eso.
 

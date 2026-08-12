@@ -4,7 +4,7 @@ export function NavbarItem({ label, href, active, className = '', ...props }) {
       href={href}
       aria-current={active ? 'true' : undefined}
       className={`text-sm font-medium transition-colors ${
-        active ? 'text-primary' : 'text-text/60 hover:text-text'
+        active ? 'text-text' : 'text-text/60 hover:text-text'
       } ${className}`}
       {...props}
     >

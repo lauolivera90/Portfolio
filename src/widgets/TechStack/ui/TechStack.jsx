@@ -1,15 +1,12 @@
 import { sections, techStack } from '../../../shared/data/index.js'
 import { iconColor } from '../../../shared/lib/index.js'
-import { Card, CardBody, Container } from '../../../shared/ui/index.js'
+import { Card, CardBody, Container, SectionLabel } from '../../../shared/ui/index.js'
 
 export function TechStack() {
   return (
     <section className="py-24 border-t border-text/10">
       <Container>
-        <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
-          <span className="w-4 h-px bg-accent" />
-          {sections.techStack.eyebrow}
-        </p>
+        <SectionLabel>{sections.techStack.eyebrow}</SectionLabel>
         <h2 className="text-3xl font-bold text-text mb-12">{sections.techStack.title}</h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

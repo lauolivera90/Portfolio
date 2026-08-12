@@ -1,14 +1,11 @@
 import { sections, timeline } from '../../../shared/data/index.js'
-import { Container } from '../../../shared/ui/index.js'
+import { Container, SectionLabel } from '../../../shared/ui/index.js'
 
 export function Timeline() {
   return (
     <section id="timeline" className="py-24 border-t border-text/10 bg-text/5">
       <Container>
-        <p className="inline-flex items-center gap-2 text-xs font-semibold text-accent uppercase tracking-wider mb-3">
-          <span className="w-4 h-px bg-accent" />
-          {sections.timeline.eyebrow}
-        </p>
+        <SectionLabel>{sections.timeline.eyebrow}</SectionLabel>
         <h2 className="text-3xl font-bold text-text mb-16">{sections.timeline.title}</h2>
 
         <div className="flex flex-col gap-0">

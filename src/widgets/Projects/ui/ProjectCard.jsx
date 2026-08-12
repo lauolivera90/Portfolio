@@ -1,6 +1,7 @@
 import { useEffect } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { useLines } from '../../../shared/hook/index.js'
+import { projectImages } from '../../../shared/lib/index.js'
 import { Button, Card, CardBody, CardFooter, Tag } from '../../../shared/ui/index.js'
 import { ProjectActions } from './ProjectActions.jsx'
 
@@ -11,7 +12,8 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
     ...project.stack.backend.slice(0, 1),
     ...project.stack.database.slice(0, 1),
   ]
-  const cover = project.images[0] ?? 'https://picsum.photos/200/300'
+  const { cover } = projectImages(project.id)
+  const coverSrc = cover ?? 'https://picsum.photos/200/300'
 
   useEffect(() => {
     onLines(project.id, lines)
@@ -21,7 +23,7 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
     <Card variant="raised" className="h-full flex flex-col hover:border-primary/40 transition-colors">
       <CardBody>
         <img
-          src={cover}
+          src={coverSrc}
           alt={project.title}
           width="200"
           height="300"
@@ -63,7 +65,7 @@ export function ProjectCard({ project, maxLines = 0, onLines, onVerMas }) {
 
             <Button variant="ghost" onClick={onVerMas}>
               <span className="inline-flex items-center gap-2">
-                Ver mas
+                View more
                 <ArrowRight aria-hidden="true" size={16} />
               </span>
             </Button>

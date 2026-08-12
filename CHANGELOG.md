@@ -4,6 +4,40 @@ Todos los cambios notables del proyecto se documentan en este archivo.
 
 Formato: secciones por fecha/sesión, la más reciente arriba. Una sesión = una unidad de trabajo (setup, un widget, un ajuste de diseño).
 
+## 2026-08-11 — Sesión: sistema de carpetas de screenshots (img0 miniatura / img1+ carousel)
+
+### Added
+- Helper `shared/lib/projectImages.js` (exportado por barrel `shared/lib`): resuelve las imágenes de un proyecto por convención de carpetas con `import.meta.glob` eager sobre `/src/shared/assets/images/projects/*/img*.{webp,png,jpg,jpeg}`. Devuelve `{ cover, carousel }` ordenado numéricamente (`img10` después de `img9`). `cover` = `img0` (miniatura, nunca en el carousel); `carousel` = `img1+`. Con cero archivos devuelve `cover: null` / `carousel: []` sin romper el build.
+- Carpetas `shared/assets/images/projects/{nexo,antisocial-net,uloom}/` con `.gitkeep` — estructura lista para soltar los WebP.
+
+### Changed
+- `ProjectCard`: la cover pasa de `project.images[0]` a `cover` de `projectImages(project.id)` (mantiene fallback picsum si no hay archivos).
+- `ProjectModal`: el carousel y el lightbox usan `carousel` de `projectImages(project.id)` (img0 excluida); `hasImages`/`total` derivan de `carousel.length`.
+- `shared/data/projects.js`: se elimina el campo `images: []` de los 3 proyectos — las imágenes ya no viven en la data, las resuelve la convención de carpetas.
+
+### Docs
+- `architecture.md` §3: convención documentada (carpeta = `project.id`, `img0` miniatura / `img1+` carousel, helper `projectImages`).
+- `design.md`: Carousel y ProjectModal referencian `projectImages`/`carousel` en vez de `project.images`.
+
+## 2026-08-11 — Sesión: revisión general de la página (a11y, primitivas, contenido, SEO)
+
+### Added
+- Primitiva `SectionLabel` en `shared/ui` (eyebrow de sección: `text-accent` uppercase + raya `w-4 h-px bg-accent` decorativa `aria-hidden`) — reemplaza el `<p>` duplicado en About, Projects, TechStack, Timeline y Contact.
+- Meta tags de SEO en `index.html`: `<title>` específico ("Lautaro B. Olivera — Full Stack Developer"), `meta description`, Open Graph (`og:type`, `og:title`, `og:description`, `og:image`), Twitter Card, `theme-color`. `html lang="es"` → `lang="en"`.
+- `public/og-image.png` (1200×630, generado con System.Drawing) para el Open Graph — placeholder visual hasta tener una imagen de marca.
+- `public/cv.pdf` (placeholder PDF válido, 662 bytes) — se reemplaza por el CV real antes del deploy.
+
+### Changed
+- **Contraste a11y:** `--color-accent: #8d6b9b` → `#a58fc2` (texto chico con accent ahora pasa AA sobre `background` y `bg-text/5`). El item activo del nav pasa de `text-primary` (~2.2:1, casi invisible) a `text-text` + subrayado `border-primary`, manteniendo `primary` solo como indicador visual.
+- `About`: foto real (`shared/assets/images/profile/hero.png`, importada con `width`/`height` + `alt` descriptivo y `object-cover`) — se elimina el bloque "Photo placeholder". *Pendiente: convertir a WebP cuando haya una herramienta de conversión disponible.*
+- `Contact`: card "Direct contact" migra del `<div>` crudo a `Card variant="surface"` + `CardBody` (se elimina la duplicación de la primitiva).
+- `cv.url` pasa de `'#'` a `/cv.pdf` (ambos "Download CV" ahora tienen destino).
+- `socials` muestran el handle real (`github.com/...`, email) en vez de "Github"/"Linkedin".
+- Idioma unificado a inglés: CTA del nav "Contactar" → "Contact", botón "Ver mas" → "View more", mes "Abr–Jul" → "Apr–Jul" en el timeline.
+
+### Removed
+- Eyebrows duplicados (5 ocurrencias del mismo `<p>`).
+
 ## 2026-08-11 — Sesión: links de socials (LinkedIn/GitHub/Email) en pestaña nueva
 
 ### Changed

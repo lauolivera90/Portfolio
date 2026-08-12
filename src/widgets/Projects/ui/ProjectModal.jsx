@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { projectImages } from '../../../shared/lib/index.js'
 import { Carousel, Lightbox, Modal, ModalBody, ModalFooter, ModalHeader, Tag } from '../../../shared/ui/index.js'
 import { ProjectActions } from './ProjectActions.jsx'
 
@@ -27,9 +28,10 @@ export function ProjectModal({ project, onClose }) {
 
   if (!project) return null
 
-  const hasImages = project.images.length > 0
+  const { carousel } = projectImages(project.id)
+  const hasImages = carousel.length > 0
   const sections = STACK_SECTIONS.filter((s) => (project.stack[s.key]?.length ?? 0) > 0)
-  const total = project.images.length
+  const total = carousel.length
 
   return (
     <>
@@ -45,7 +47,7 @@ export function ProjectModal({ project, onClose }) {
               paused={zoomIndex !== null}
               onImageClick={setZoomIndex}
             >
-              {project.images.map((src, i) => (
+              {carousel.map((src, i) => (
                 <img
                   key={src}
                   src={src}
@@ -73,7 +75,7 @@ export function ProjectModal({ project, onClose }) {
       {zoomIndex !== null && (
         <Lightbox
           open
-          src={project.images[zoomIndex]}
+          src={carousel[zoomIndex]}
           alt={`${project.title} screenshot ${zoomIndex + 1}`}
           onPrev={() => setZoomIndex((i) => (i - 1 + total) % total)}
           onNext={() => setZoomIndex((i) => (i + 1) % total)}

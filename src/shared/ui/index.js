@@ -7,5 +7,6 @@ export { Dropdown, DropdownItem, DropdownMenu, DropdownTrigger } from './Dropdow
 export { IconButton } from './IconButton/IconButton.jsx'
 export { Lightbox } from './Lightbox/Lightbox.jsx'
 export { Modal, ModalBody, ModalFooter, ModalHeader } from './Modal/Modal.jsx'
+export { SectionLabel } from './SectionLabel/SectionLabel.jsx'
 export { Tag } from './Tag/Tag.jsx'
 export { Toast } from './Toast/Toast.jsx'
